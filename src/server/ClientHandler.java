@@ -9,6 +9,7 @@ import javax.print.DocFlavor;
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,13 +31,13 @@ class ClientHandler implements Runnable
         this.s = s;
 
     }
-    private Request readRequest() throws IOException, ClassNotFoundException {
+    private Request readRequest() throws IOException, ClassNotFoundException{
         Request request = (Request) this.objectInputStream.readObject();
         System.out.println(request);
         return request;
     }
 
-    private void sendData(Response response) throws IOException {
+    private synchronized void sendData(Response response) throws IOException {
         System.out.println("Sending response.");
         System.out.println(response);
         this.objectOutputStream.writeObject(response);
@@ -63,6 +64,7 @@ class ClientHandler implements Runnable
     @Override
     public void run()
     {
+        exit = false;
         try {
             this.objectOutputStream = new ObjectOutputStream(s.getOutputStream());
             this.objectInputStream = new ObjectInputStream(s.getInputStream());
@@ -75,6 +77,7 @@ class ClientHandler implements Runnable
 
                 } catch (IOException | ClassNotFoundException e) {
                     //e.printStackTrace();
+                    this.exit = true;
                 }
             }
 

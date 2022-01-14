@@ -1,13 +1,7 @@
 package server;
-
 import java.io.*;
-import java.text.*;
 import java.util.*;
 import java.net.*;
-import server.ClientHandler;
-
-import javax.print.DocFlavor;
-
 // Server class
 public class Server extends Thread
 {
