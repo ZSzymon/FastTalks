@@ -2,20 +2,13 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
 
 import java.io.IOException;
 
 public class RegisterController extends MyController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     private TextField emailField;
 
@@ -27,7 +20,7 @@ public class RegisterController extends MyController {
 
     @FXML
     void OpenLoginScene(ActionEvent event) throws IOException {
-        changeScene("loginScene.fxml", event);
+        changeScene("/loginScene.fxml", event);
     }
 
     @FXML

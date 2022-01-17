@@ -6,6 +6,7 @@ import java.net.*;
 // Server class
 public class Server extends Thread
 {
+
     ServerSocket ss;
     public Vector<Thread> clients = new Vector<>();
     public File clientsFile = new File("");

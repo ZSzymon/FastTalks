@@ -24,12 +24,12 @@ public class LoginController extends MyController {
     @FXML
     void login(ActionEvent event) throws IOException {
 //        System.out.println("Login attempt:"+loginField.getText()+"\n password: "+passwordField.getText());
-        changeScene("chatter.fxml", event);
+        changeScene("/chatter.fxml", event);
     }
 
     @FXML
     void openRegisterScene(ActionEvent event) throws IOException {
-        changeScene("registerScene.fxml", event);
+        changeScene("/registerScene.fxml", event);
     }
 
 

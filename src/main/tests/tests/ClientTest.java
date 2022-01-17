@@ -1,12 +1,12 @@
 package tests;
-import main.java.client.Client;
-import main.java.utils.Request.*;
-import main.java.utils.Response.*;
-import main.java.utils.DataModel.*;
+import client.Client;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Test;
+import utils.DataModel;
+import utils.Request;
+import utils.Response;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

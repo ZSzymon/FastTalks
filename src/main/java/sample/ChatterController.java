@@ -26,7 +26,7 @@ public class ChatterController extends MyController {
 
     @FXML
     void logOut(ActionEvent event) throws IOException {
-        changeScene("loginScene.fxml", event);
+        changeScene("/loginScene.fxml", event);
     }
 
     @FXML

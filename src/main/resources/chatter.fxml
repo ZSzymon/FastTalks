@@ -52,7 +52,7 @@
                <children>
                   <ImageView fitHeight="69.0" fitWidth="75.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@static/images/icon-removebg.png" />
+                        <Image url="@sample/static/images/icon-removebg.png" />
                      </image>
                      <effect>
                         <DropShadow>
