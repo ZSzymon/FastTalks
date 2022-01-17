@@ -2,20 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/utils/Request.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/tests/tests/ClientTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/tests/tests/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/tests/tests/ServerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/Client$Receiver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/Client$Sender.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FastTalks/client/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/ClientExec.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FastTalks/client/ClientExec.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FastTalks/server/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/tests/ClientTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FastTalks/tests/ClientTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/utils/Response.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/FastTalks/utils/Response.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tests/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/ClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FastTalks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FastTalks.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/Client$MessageListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/ClientExec.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/RequestSender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/client/ResponseReceiver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/ChatterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/MyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/RegisterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/chatter.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/loginScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/registerScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/sample/static/images/icon-removebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/server/ClientHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/server/Server.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/tests/ClientTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/tests/Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/tests/ServerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/utils/DataModel$RequestType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/utils/DataModel$ResponseCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/utils/DataModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/utils/Request.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/utils/Response.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ClientExec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/ClientExec.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/RequestSender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/ResponseReceiver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/ChatterController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/MyController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/RegisterController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/chatter.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/loginScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/registerScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/static/images/icon-removebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/ClientTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/ServerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/DataModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Request.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Response.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +129,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="23WA0Y8IFRIFuUfXRjXGYySYdZM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -110,29 +159,39 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/sample/static/images" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/tests" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15625" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="client" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="client" />
-    </key>
     <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\tests" />
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\test" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="tests" />
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="sample" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main" />
       <recent name="D:\Szymon\STUDIA\FastTalks\src\sample\static\images" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="client" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -147,7 +206,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ClientTest.testSendLotOfRequests">
+  <component name="RunManager" selected="JUnit.ClientTest.testToJson">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -197,12 +256,12 @@
       </method>
     </configuration>
     <configuration name="ServerTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tests.ServerTest" />
+      <option name="MAIN_CLASS_NAME" value="ServerTest" />
       <module name="FastTalks" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tests.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -216,17 +275,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest.testSendLotOfRequest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientTest.testFromJsonToMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tests.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
       <option name="MAIN_CLASS_NAME" value="tests.ClientTest" />
-      <option name="METHOD_NAME" value="testSendLotOfRequest" />
+      <option name="METHOD_NAME" value="testFromJsonToMap" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -240,7 +299,7 @@
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="tests.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -256,7 +315,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest.testSendRequest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientTest.testToJson" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
@@ -264,9 +323,9 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.ClientTest" />
-      <option name="METHOD_NAME" value="testSendRequest" />
+      <option name="PACKAGE_NAME" value="main.java.tests" />
+      <option name="MAIN_CLASS_NAME" value="main.java.tests.ClientTest" />
+      <option name="METHOD_NAME" value="testToJson" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -309,11 +368,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ClientTest.testSendLotOfRequests" />
-        <item itemvalue="JUnit.ClientTest.testSendRequest" />
+        <item itemvalue="JUnit.ClientTest.testToJson" />
+        <item itemvalue="JUnit.ClientTest.testFromJsonToMap" />
         <item itemvalue="Application.ClientExec" />
+        <item itemvalue="JUnit.ClientTest.testSendLotOfRequests" />
         <item itemvalue="Application.ServerTest" />
-        <item itemvalue="JUnit.ClientTest.testSendLotOfRequest" />
       </list>
     </recent_temporary>
   </component>
@@ -358,14 +417,24 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tests/ClientTest.java</url>
-          <line>40</line>
+          <url>file://$PROJECT_DIR$/src/test/java/main/java/tests/ClientTest.java</url>
+          <line>66</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/tests/ClientTest.java</url>
-          <line>60</line>
+          <url>file://$PROJECT_DIR$/src/test/java/main/java/tests/ClientTest.java</url>
+          <line>86</line>
           <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/server/ClientHandler.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/main/java/tests/ClientTest.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="80" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
