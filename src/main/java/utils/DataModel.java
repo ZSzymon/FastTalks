@@ -2,13 +2,21 @@ package utils;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
 public class DataModel implements Serializable{
 
-    Map<String, String> content;
-    String creationDate;
+    public Map<String, String> content;
+    public String creationDate;
+
+    public DataModel(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        this.creationDate = dtf.format(now);
+
+    }
     public DataModel(Map<String, String> content) {
         this.content = content;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");

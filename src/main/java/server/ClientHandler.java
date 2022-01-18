@@ -8,55 +8,33 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 // ClientHandler class
-public class ClientHandler implements Runnable
+public class ClientHandler extends Thread
 {
     boolean exit = false;
-    ObjectInputStream objectInputStream;
-    ObjectOutputStream objectOutputStream;
+    public ObjectInputStream objectInputStream;
+    public ObjectOutputStream objectOutputStream;
     final Socket s;
+    public Set<Request> requests;
 
     // Constructor
     public ClientHandler(Socket s) {
         this.s = s;
-
     }
 
     private synchronized void sendData(Set<Response> responses) throws IOException {
-        System.out.println("Sending response.");
-        System.out.println(responses);
         this.objectOutputStream.writeObject(responses);
         this.objectOutputStream.flush();
     }
 
-    private Set<Response> handleRequests(Set<Request> requests){
-        Set<Response> responses = new HashSet<>();
-        for(Request request: requests){
-            responses.add(this.handleRequest(request));
-        }
-        return responses;
-    }
-    private Response handleRequest(Request request) {
-
-        if (request.requestType == DataModel.RequestType.REGISTER) {
-
-        } else if (request.requestType == DataModel.RequestType.LOGIN) {
-
-        } else if (request.requestType == DataModel.RequestType.LOGOUT) {
-
-        } else if (request.requestType == DataModel.RequestType.CHAT_MESSAGE) {
-
-        } else if (request.requestType == DataModel.RequestType.HEARTBEAT){
-
-        }
-        return new Response(null, request.requestId, DataModel.ResponseCode.OK);
-    }
 
 
     public void closeConnection(){
         this.exit = true;
     }
+
     @Override
     public void run()
     {
@@ -67,9 +45,15 @@ public class ClientHandler implements Runnable
 
             while (!exit) {
                 try {
-                    Set<Request> requests = (HashSet<Request>) objectInputStream.readObject();
-                    Set<Response> responses = this.handleRequests(requests);
-                    this.sendData(responses);
+                    requests = (HashSet<Request>) objectInputStream.readObject();
+                    Server.requestQueue.add(this);
+                    if( Server.requestAnalyser.getState() == Thread.State.WAITING )
+                    {
+                        synchronized (Server.requestAnalyser) {
+                            Server.requestAnalyser.notify();
+                        }
+                    }
+                    //requestAnalyser will send responses back to client.
                 }catch (SocketTimeoutException ste){
                     //"ignore"
                 } catch (ClassNotFoundException e) {

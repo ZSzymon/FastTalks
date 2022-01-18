@@ -2,28 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/utils/PrimitiveDateBase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/users.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/ClientModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/usertests.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/utils/PrimitiveDateBaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FastTalks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FastTalks.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/main/java/sample/chatter.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/main/java/sample/loginScene.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/main/java/sample/registerScene.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/main/java/sample/static/images/icon-removebg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/main/java/server/users/users.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/ChatterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/ChatterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/chatter.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chatter.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/loginScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/loginScene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/registerScene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/registerScene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/tests/tests/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/tests/tests/ClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/PrimitiveDateBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/PrimitiveDateBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/client/Client$MessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/client/Client$MessageListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/client/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/RegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/RegisterController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/server/Server.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +115,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="create.test.in.the.same.root" value="true" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/tests" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/test/java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15625" />
@@ -135,31 +125,33 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="client" />
+    </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="utils" />
       <recent name="client" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\resources" />
-      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\tests" />
-      <recent name="D:\Szymon\STUDIA\FastTalks\src\test" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="tests" />
       <recent name="" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="sample" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Szymon\STUDIA\FastTalks\src\main\resources" />
       <recent name="D:\Szymon\STUDIA\FastTalks\src\main" />
       <recent name="D:\Szymon\STUDIA\FastTalks\src\sample\static\images" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="client" />
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="utils" />
+      <recent name="sample" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\resources" />
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\tests" />
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\test" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -174,7 +166,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.PrimitiveDateBaseTest.addUserReloadAddCheckWhatHappen">
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -189,20 +181,6 @@
     </configuration>
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientExec" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="client.ClientExec" />
-      <module name="FastTalks" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -223,37 +201,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerTest (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="tests.ServerTest" />
-      <module name="FastTalks" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="tests.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest.testFromJsonToMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrimitiveDateBaseTest.addUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.ClientTest" />
-      <option name="METHOD_NAME" value="testFromJsonToMap" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.PrimitiveDateBaseTest" />
+      <option name="METHOD_NAME" value="addUser" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -263,17 +227,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest.testSendLotOfRequests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrimitiveDateBaseTest.addUserReloadAddCheckWhatHappen" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.ClientTest" />
-      <option name="METHOD_NAME" value="testSendLotOfRequests" />
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.PrimitiveDateBaseTest" />
+      <option name="METHOD_NAME" value="addUserReloadAddCheckWhatHappen" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -283,7 +247,47 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest.testToJson" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrimitiveDateBaseTest.addUserReloadExistTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FastTalks" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.PrimitiveDateBaseTest" />
+      <option name="METHOD_NAME" value="addUserReloadExistTrue" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrimitiveDateBaseTest.commit (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FastTalks" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="utils" />
+      <option name="MAIN_CLASS_NAME" value="utils.PrimitiveDateBaseTest" />
+      <option name="METHOD_NAME" value="commit" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrimitiveDateBaseTest.commit" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
@@ -291,9 +295,9 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="main.java.tests" />
-      <option name="MAIN_CLASS_NAME" value="main.java.tests.ClientTest" />
-      <option name="METHOD_NAME" value="testToJson" />
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" value="tests.PrimitiveDateBaseTest" />
+      <option name="METHOD_NAME" value="commit" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
@@ -336,11 +340,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerTest (1)" />
-        <item itemvalue="JUnit.ClientTest.testToJson" />
-        <item itemvalue="JUnit.ClientTest.testFromJsonToMap" />
-        <item itemvalue="Application.ClientExec" />
-        <item itemvalue="JUnit.ClientTest.testSendLotOfRequests" />
+        <item itemvalue="JUnit.PrimitiveDateBaseTest.addUserReloadAddCheckWhatHappen" />
+        <item itemvalue="JUnit.PrimitiveDateBaseTest.addUserReloadExistTrue" />
+        <item itemvalue="JUnit.PrimitiveDateBaseTest.addUser" />
+        <item itemvalue="JUnit.PrimitiveDateBaseTest.commit (1)" />
+        <item itemvalue="JUnit.PrimitiveDateBaseTest.commit" />
       </list>
     </recent_temporary>
   </component>
@@ -385,29 +389,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/main/java/tests/ClientTest.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="74" />
+          <url>file://$PROJECT_DIR$/src/test/java/utils/PrimitiveDateBaseTest.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/main/java/tests/ClientTest.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/server/ClientHandler.java</url>
-          <line>76</line>
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/main/java/tests/ClientTest.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/sample/Main.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="82" />
+          <url>file://$PROJECT_DIR$/src/test/java/utils/PrimitiveDateBaseTest.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="95" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -415,6 +404,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/FastTalks$ClientTest_testTwoClients.ic" NAME="ClientTest.testTwoClients Coverage Results" MODIFIED="1642112739023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>tests.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/FastTalks$PrimitiveDateBaseTest_connect.ic" NAME="PrimitiveDateBaseTest.connect Coverage Results" MODIFIED="1642517678400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>utils.*</FILTER>
     </SUITE>
   </component>
 </project>
