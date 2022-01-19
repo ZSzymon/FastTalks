@@ -55,7 +55,7 @@ class ClientTest {
 
 
     void testCreateRequest(){
-        Request request = new Request(new HashMap<>(), UUID.randomUUID(), DataModel.RequestType.REGISTER);
+        Request request = new Request(new HashMap<>(), UUID.randomUUID(), DataModel.RequestType.HEARTBEAT);
         assertEquals(request.requestId, 0);
         assertEquals(request.requestType, DataModel.RequestType.REGISTER);
     }
@@ -63,7 +63,7 @@ class ClientTest {
     @Test
     void testSendRequest() throws InterruptedException {
         UUID requestId = UUID.randomUUID();
-        Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.REGISTER);
+        Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
         this.client.addRequest(request);
         this.client.startListener();
         Thread.sleep(1);
@@ -75,13 +75,13 @@ class ClientTest {
     @Test
     void testSendLotOfRequests() throws InterruptedException {
         UUID requestId = UUID.randomUUID();
-        Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.REGISTER);
+        Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
         this.client.addRequest(request);
 
         for (int i = 1; i < 10 ; i++) {
             requestId = UUID.randomUUID();
-            request = new Request(new HashMap<>(), requestId, DataModel.RequestType.REGISTER);
-            Thread.sleep(500);
+            request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
+            Thread.sleep(5);
             this.client.addRequest(request);
         }
         this.client.startListener();

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/PrimitiveDateBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/PrimitiveDateBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/tests/tests/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/tests/tests/ClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/ClientTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/tests/ClientTest.class" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +111,7 @@
     <property name="create.test.in.the.same.root" value="true" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/tests" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/server" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15625" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -129,6 +137,7 @@
       <recent name="sample" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\server" />
       <recent name="D:\Szymon\STUDIA\FastTalks\src\main" />
       <recent name="D:\Szymon\STUDIA\FastTalks\src\sample\static\images" />
     </key>
@@ -204,18 +213,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientTest.testFromJsonToMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FastTalks" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="tests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="tests" />
       <option name="MAIN_CLASS_NAME" value="tests.ClientTest" />
-      <option name="METHOD_NAME" value="testFromJsonToMap" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="moduleWithDependencies" />
@@ -318,10 +326,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.ClientTest.testSendLotOfRequests" />
-        <item itemvalue="JUnit.ClientTest.testSendRequest" />
         <item itemvalue="Application.ServerTest (1)" />
+        <item itemvalue="JUnit.ClientTest" />
+        <item itemvalue="JUnit.ClientTest.testSendRequest" />
         <item itemvalue="JUnit.ClientTest.testToJson" />
-        <item itemvalue="JUnit.ClientTest.testFromJsonToMap" />
       </list>
     </recent_temporary>
   </component>

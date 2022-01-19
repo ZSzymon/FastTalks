@@ -3,12 +3,12 @@ package server;
 import java.io.*;
 import java.util.*;
 import java.net.*;
-// Server class
+
 public class Server extends Thread
 {
-    ServerSocket ss;
-    public Vector<Thread> clients = new Vector<>();
-    public File clientsFile = new File("");
+    private ServerSocket ss;
+    private Vector<Thread> clients = new Vector<>();
+
     public Server(int port) throws IOException {
         ss = new ServerSocket(port);
     }
@@ -30,12 +30,11 @@ public class Server extends Thread
             }
             if(socket != null){
                 Thread clientThread = null;
-                clientThread = new Thread(new ClientHandler(socket));
+                clientThread = new ClientHandler(socket);
                 System.out.println("Adding this client to active client list");
                 clients.add(clientThread);
                 clientThread.start();
             }
-
         }
     }
 }

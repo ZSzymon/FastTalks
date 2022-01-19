@@ -31,14 +31,14 @@ public class PrimitiveDateBase {
             e.printStackTrace();
         }
     }
-    public synchronized void connect() throws URISyntaxException, IOException {
+    public synchronized void connect() throws IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(this.userFile));
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         this.db = gson.fromJson(br, type);
         br.close();
         if(this.db == null){
-            this.db = new HashMap<String, String>();
+            this.db = new HashMap<>();
         }
     }
     public void commit()  {

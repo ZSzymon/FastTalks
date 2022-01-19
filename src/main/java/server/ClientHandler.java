@@ -10,20 +10,20 @@ import java.net.SocketTimeoutException;
 import java.util.*;
 
 // ClientHandler class
-public class ClientHandler implements Runnable
+public class ClientHandler extends Thread
 {
     boolean exit = false;
     ObjectInputStream objectInputStream;
     ObjectOutputStream objectOutputStream;
     final Socket s;
-
+    public static int i =0;
     // Constructor
     public ClientHandler(Socket s) {
+        super("Client Handler:" + (i+1));
         this.s = s;
-
     }
 
-    private synchronized void sendData(Set<Response> responses) throws IOException {
+    private void sendData(Set<Response> responses) throws IOException {
         System.out.println("Sending response.");
         System.out.println(responses);
         this.objectOutputStream.writeObject(responses);
@@ -75,8 +75,7 @@ public class ClientHandler implements Runnable
                 } catch (ClassNotFoundException e) {
                     this.exit = true;
                     closeStreams();
-                } catch (SocketException se){
-                    System.out.println("Socket exception. Connection reset.");
+                } catch (SocketException ignored){
                 }
             }
 
