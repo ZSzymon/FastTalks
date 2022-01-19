@@ -1,12 +1,11 @@
 package tests;
-import main.java.client.Client;
-import main.java.utils.Request.*;
-import main.java.utils.Response.*;
-import main.java.utils.DataModel.*;
-
+import client.Client;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.Test;
+import utils.DataModel;
+import utils.Request;
+import utils.Response;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -17,13 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
     int port = Config.port;
-    Thread clientThread;
     Client client;
 
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() throws IOException, InterruptedException {
-        //createClient(true);
+        createClient(true);
     }
 
     void createClient(Boolean startOnCreation) throws InterruptedException, IOException {

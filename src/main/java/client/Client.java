@@ -43,8 +43,8 @@ public class Client {
         MessageListener(Socket socket) throws IOException {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
-            this.requests = new ArrayBlockingQueue<>(1000);
-            this.responses = new ArrayBlockingQueue<>(1000);
+            this.requests = new ArrayBlockingQueue<>(100);
+            this.responses = new ArrayBlockingQueue<>(100);
         }
 
         @Override
@@ -98,9 +98,13 @@ public class Client {
         }
         private synchronized void sendAndReceiveAll() throws IOException, ClassNotFoundException, InterruptedException {
             Set<Request> payload = new HashSet<>(requests);
+            System.out.println("Sending requests.");
             objectOutputStream.writeObject(payload);
+            System.out.println("Send requests..");
 
+            System.out.println("Reading Responses.");
             Set<Response> responses = (Set<Response>) objectInputStream.readObject();
+            System.out.println("Read responses.");
             for(Response response: responses){
                 this.addResponse(response);
             }
