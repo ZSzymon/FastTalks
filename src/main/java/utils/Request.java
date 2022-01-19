@@ -29,6 +29,7 @@ public class Request extends DataModel implements Serializable {
         this.requestType = requestType;
     }
 
+
     private static Request messageRequest(UUID requestId, String senderEmail, String receiverMail, String message){
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("sender", senderEmail);
@@ -42,7 +43,7 @@ public class Request extends DataModel implements Serializable {
         return request;
     }
     @NotNull
-    private static Request registerRequest(String email, String password1, String password2, UUID requestId){
+    public static Request registerRequest(String email, String password1, String password2, UUID requestId){
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("email", email);
         hashMap.put("password1", password1);
@@ -51,7 +52,7 @@ public class Request extends DataModel implements Serializable {
         return request;
     }
     @NotNull
-    private static Request loginRequest(String email, String password, UUID requestId){
+    public static Request loginRequest(String email, String password, UUID requestId){
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("email", email);
         hashMap.put("password", password);

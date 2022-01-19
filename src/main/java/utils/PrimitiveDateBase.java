@@ -24,7 +24,7 @@ public class PrimitiveDateBase {
         this.gson = new Gson();
         this.userFile = getFileFromResource(this.userFilePath);
     }
-    public void cleanFile(){
+    public synchronized void cleanFile(){
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(this.userFile));
             gson.toJson(new HashMap<String, String >(), bw);
@@ -32,7 +32,7 @@ public class PrimitiveDateBase {
             e.printStackTrace();
         }
     }
-    public void connect() throws URISyntaxException, IOException {
+    public synchronized void connect() throws URISyntaxException, IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(this.userFile));
         Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -54,18 +54,18 @@ public class PrimitiveDateBase {
         }
     }
 
-    public void reload() throws IOException, URISyntaxException {
+    public synchronized void reload() throws IOException, URISyntaxException {
         connect();
     }
-    public int usersLenght(){
+    public synchronized int usersLenght(){
         return this.db.keySet().size();
     }
 
-    public boolean exist(String email){
+    public synchronized boolean exist(String email){
         return this.db.containsKey(email);
     }
 
-    public boolean addUser(String email, String password){
+    public synchronized boolean addUser(String email, String password){
         if(!exist(email)){
             this.db.put(email, password);
             return true;
@@ -73,7 +73,7 @@ public class PrimitiveDateBase {
         return false;
     }
 
-    private static File getFileFromResource(String fileName) throws URISyntaxException {
+    private synchronized static File getFileFromResource(String fileName) throws URISyntaxException {
 
         ClassLoader classLoader = PrimitiveDateBase.class.getClassLoader();
         URL resource = classLoader.getResource(fileName);

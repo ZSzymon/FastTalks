@@ -1,5 +1,4 @@
-package tests;
-import client.Client;
+package client;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -11,25 +10,25 @@ import utils.Response;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
-
+import server.Config;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class ClientTest {
     int port = Config.port;
-    Thread clientThread;
     Client client;
 
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() throws IOException, InterruptedException {
-        //createClient(true);
+        createClient(true);
     }
 
     void createClient(Boolean startOnCreation) throws InterruptedException, IOException {
         this.client = new Client("localhost", this.port);
         if (startOnCreation){
             this.client.connect();
+
         }
     }
 
@@ -41,6 +40,17 @@ class ClientTest {
         System.out.println(gson.toJson(map));
     }
 
+    @Test
+    void registerRequest() throws InterruptedException {
+        Request request = Request.registerRequest("test@gmail.com", "password", "password", UUID.randomUUID());
+        this.client.addRequest(request);
+        Response response = this.client.messageListener.getResponse();
+        assertNotNull(response);
+        assertEquals(response.responseCode, DataModel.ResponseCode.OK);
+        Request request2 = Request.registerRequest("test@gmail.com", "password", "password", UUID.randomUUID());
+        this.client.addRequest(request2);
+        Response response2 = this.client.messageListener.getResponse();
+    }
     @Test
     void testFromJsonToMap(){
         //GIVEN
@@ -65,9 +75,8 @@ class ClientTest {
     @Test
     void testSendRequest() throws InterruptedException {
         UUID requestId = UUID.randomUUID();
-        Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.REGISTER);
+        Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
         this.client.addRequest(request);
-        this.client.startListener();
         Thread.sleep(1);
         Response response = this.client.messageListener.getResponse();
 
@@ -86,7 +95,6 @@ class ClientTest {
             Thread.sleep(500);
             this.client.addRequest(request);
         }
-        this.client.startListener();
         Response response = this.client.messageListener.getResponse();
         System.out.println(response);
     }

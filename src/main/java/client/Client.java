@@ -13,26 +13,30 @@ public class Client {
     int port;
     public MessageListener messageListener;
 
-
-
-    public Client(String host, int port) throws InterruptedException, IOException {
+    public Client(String host, int port) {
         this.host = host;
         this.port = port;
+
     }
     public void connect() throws IOException, ConnectException{
         socket = new Socket(host, port);
-        //socket.setKeepAlive(true);
-        //int timeoutInterval = 200;
-        //socket.setSoTimeout(timeoutInterval);
+        socket.setKeepAlive(true);
         this.messageListener = new MessageListener(socket);
-    }
-    public void startListener(){
         this.messageListener.start();
     }
+
 
     public void addRequest(Request request) throws InterruptedException {
         if (request != null){
             messageListener.addRequest(request);
+            if(!messageListener.isAlive()){
+                messageListener.start();
+            }
+            if(messageListener.getState() == Thread.State.WAITING){
+                synchronized (messageListener){
+                    messageListener.notify();
+                }
+            }
         }
     }
 
@@ -42,7 +46,9 @@ public class Client {
         ArrayBlockingQueue<Request> requests;
         ArrayBlockingQueue<Response> responses;
         boolean exit = false;
+
         MessageListener(Socket socket) throws IOException {
+            super();
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
             this.requests = new ArrayBlockingQueue<>(1000);
@@ -71,8 +77,13 @@ public class Client {
         void stopListener(){
             exit = true;
         }
-        private synchronized void addRequest(Request request) throws InterruptedException {
+        private void addRequest(Request request) throws InterruptedException {
             this.requests.put(request);
+            if(this.getState() == State.WAITING){
+                synchronized (this){
+                    this.notify();
+                }
+            }
         }
 
         private void addResponse(Response response) throws InterruptedException {
@@ -99,12 +110,20 @@ public class Client {
             requests = new ArrayBlockingQueue<>(1000);
         }
         private synchronized void sendAndReceiveAll() throws IOException, ClassNotFoundException, InterruptedException {
+            if(requests.size() == 0) {
+                return;
+            }
             Set<Request> payload = new HashSet<>(requests);
-            objectOutputStream.writeObject(payload);
+            for (Request request: payload){
+                System.out.println("Send Request:"+ request.toString());
+            }
 
-            Set<Response> responses = (Set<Response>) objectInputStream.readObject();
+            objectOutputStream.writeObject(payload);
+            objectOutputStream.flush();
+            Set<Response> responses = (HashSet<Response>) objectInputStream.readObject();
             for(Response response: responses){
                 this.addResponse(response);
+                System.out.println("Receive response: "+ response.toString());
             }
 
             reinitializeRequestQueue();
