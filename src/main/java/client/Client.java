@@ -1,5 +1,6 @@
 package client;
 
+import javafx.stage.Stage;
 import utils.*;
 import java.io.*;
 import java.net.*;
@@ -11,47 +12,99 @@ public class Client {
     String host;
     boolean exit = false;
     int port;
-    public MessageListener messageListener;
+    public final Sender sender = new Sender();
+    public final Receiver receiver = new Receiver();
 
     public Client(String host, int port) throws InterruptedException, IOException {
         this.host = host;
         this.port = port;
+
     }
     public void connect() throws IOException, ConnectException{
         socket = new Socket(host, port);
-        //socket.setKeepAlive(true);
+        socket.setKeepAlive(true);
         //int timeoutInterval = 200;
         //socket.setSoTimeout(timeoutInterval);
-        this.messageListener = new MessageListener(socket);
     }
-    public void startListener(){
-        this.messageListener.start();
+    public void startListener() throws IOException {
+        this.receiver.start(socket);
+        this.sender.start(socket);
     }
 
     public void addRequest(Request request) throws InterruptedException {
         if (request != null){
-            messageListener.addRequest(request);
+            sender.addRequest(request);
+            if(this.sender.getState() == Thread.State.WAITING){
+                synchronized (this.sender){
+                    this.sender.notify();
+                }
+            }
         }
+
     }
 
-    public class MessageListener extends Thread{
+    public static class Sender extends Thread{
         ObjectOutputStream objectOutputStream;
-        ObjectInputStream objectInputStream;
         ArrayBlockingQueue<Request> requests;
+        boolean senderExit = false;
+
+        Sender() throws IOException {
+            super("Sender thread.");
+            this.requests = new ArrayBlockingQueue<>(100);
+        }
+        public synchronized void start(Socket socket) throws IOException {
+            this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            super.start();
+        }
+
+        @Override
+        public void run(){
+            while (!senderExit){
+                try{
+                    sendAll();
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        public void addRequest(Request request){
+            this.requests.add(request);
+        }
+        private void sendAll() throws IOException, InterruptedException {
+            if(requests.size() ==0){
+                synchronized (this){
+                    this.wait();
+                }
+            }
+            Set<Request> payload = new HashSet<>(requests);
+            System.out.println("Sending requests.");
+            objectOutputStream.writeObject(payload);
+            System.out.println("Send requests..");
+            reinitializeRequestQueue();
+        }
+        private synchronized void reinitializeRequestQueue(){
+            requests = null;
+            requests = new ArrayBlockingQueue<>(1000);
+        }
+    }
+    public class Receiver extends Thread{
+        ObjectInputStream objectInputStream;
         ArrayBlockingQueue<Response> responses;
         boolean exit = false;
-        MessageListener(Socket socket) throws IOException {
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            this.requests = new ArrayBlockingQueue<>(100);
+        Receiver(){
+            super("Receiver thread.");
             this.responses = new ArrayBlockingQueue<>(100);
         }
 
+        public synchronized void start(Socket socket) throws IOException {
+            this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+            super.start();
+        }
         @Override
         public void run() {
             while (true){
                 try{
-                    sendAndReceiveAll();
+                    receiveAll();
                 }catch (SocketTimeoutException ignored){
                 } catch (IOException e) {
                     System.out.println("IO excetion");
@@ -65,51 +118,35 @@ public class Client {
                 }
             }
         }
-
-        void stopListener(){
+        public void exit(){
             exit = true;
-        }
-        private synchronized void addRequest(Request request) throws InterruptedException {
-            this.requests.put(request);
         }
 
         private void addResponse(Response response) throws InterruptedException {
             if(response != null){
-                responses.put(response);
+                this.responses.put(response);
             }
         }
 
         public Response getResponse() throws InterruptedException {
-            return responses.take();
-        }
-
-        public synchronized Response getResponse(UUID responseId){
-            for(Response response: responses){
-                if (response.responseId == responseId){
-                    return response;
-                }
+            if (responses.size() > 0){
+                return responses.take();
             }
             return null;
         }
 
-        private synchronized void reinitializeRequestQueue(){
-            requests = null;
-            requests = new ArrayBlockingQueue<>(1000);
+        private void reinitializeRequestQueue(){
+            responses = null;
+            responses = new ArrayBlockingQueue<>(100);
         }
-        private synchronized void sendAndReceiveAll() throws IOException, ClassNotFoundException, InterruptedException {
-            Set<Request> payload = new HashSet<>(requests);
-            System.out.println("Sending requests.");
-            objectOutputStream.writeObject(payload);
-            System.out.println("Send requests..");
-
-            System.out.println("Reading Responses.");
+        private void receiveAll() throws IOException, ClassNotFoundException, InterruptedException {
             Set<Response> responses = (Set<Response>) objectInputStream.readObject();
             System.out.println("Read responses.");
+
             for(Response response: responses){
                 this.addResponse(response);
             }
 
-            reinitializeRequestQueue();
         }
     }
 }

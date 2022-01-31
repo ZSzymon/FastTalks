@@ -61,19 +61,19 @@ class ClientTest {
     }
 
     @Test
-    void testSendRequest() throws InterruptedException {
+    void testSendRequest() throws InterruptedException, IOException {
         UUID requestId = UUID.randomUUID();
         Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
         this.client.addRequest(request);
         this.client.startListener();
-        Thread.sleep(1);
-        Response response = this.client.messageListener.getResponse();
+        Thread.sleep(100);
+        Response response = this.client.receiver.getResponse();
 
         System.out.println(response);
     }
 
     @Test
-    void testSendLotOfRequests() throws InterruptedException {
+    void testSendLotOfRequests() throws InterruptedException, IOException {
         UUID requestId = UUID.randomUUID();
         Request request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
         this.client.addRequest(request);
@@ -81,11 +81,12 @@ class ClientTest {
         for (int i = 1; i < 10 ; i++) {
             requestId = UUID.randomUUID();
             request = new Request(new HashMap<>(), requestId, DataModel.RequestType.HEARTBEAT);
-            Thread.sleep(5);
+
             this.client.addRequest(request);
         }
         this.client.startListener();
-        Response response = this.client.messageListener.getResponse();
+        Thread.sleep(500);
+        Response response = this.client.receiver.getResponse();
         System.out.println(response);
     }
 

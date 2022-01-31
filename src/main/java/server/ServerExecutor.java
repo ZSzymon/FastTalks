@@ -1,17 +1,11 @@
-package tests;
-
-import org.jetbrains.annotations.NotNull;
-import server.Server;
+package server;
 
 import java.io.IOException;
 
-public class ServerTest {
+public class ServerExecutor {
     Server server;
     int port  = Config.port;
-    void runServer(){
-        this.server.start();
-    }
-    void createServer(@NotNull Boolean startOnCreation) throws IOException {
+    void createServer(Boolean startOnCreation) throws IOException {
         this.server = new Server(port);
         if (startOnCreation){
             this.server.start();
@@ -19,7 +13,8 @@ public class ServerTest {
     }
 
     public static void main(String[] args) throws IOException {
-        ServerTest serverTest = new ServerTest();
+        ServerExecutor serverTest = new ServerExecutor();
         serverTest.createServer(true);
     }
+
 }
