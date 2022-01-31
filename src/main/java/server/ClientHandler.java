@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.net.URISyntaxException;
 import java.util.*;
 
 // ClientHandler class
@@ -30,17 +31,17 @@ public class ClientHandler extends Thread
         this.objectOutputStream.flush();
     }
 
-    private Set<Response> handleRequests(Set<Request> requests){
+    private Set<Response> handleRequests(Set<Request> requests) throws IOException, URISyntaxException {
         Set<Response> responses = new HashSet<>();
         for(Request request: requests){
             responses.add(this.handleRequest(request));
         }
         return responses;
     }
-    private Response handleRequest(Request request) {
-
+    private Response handleRequest(Request request) throws IOException, URISyntaxException {
+        Response response = null;
         if (request.requestType == DataModel.RequestType.REGISTER) {
-
+            response = handleRegister(request);
         } else if (request.requestType == DataModel.RequestType.LOGIN) {
 
         } else if (request.requestType == DataModel.RequestType.LOGOUT) {
@@ -48,12 +49,28 @@ public class ClientHandler extends Thread
         } else if (request.requestType == DataModel.RequestType.CHAT_MESSAGE) {
 
         } else if (request.requestType == DataModel.RequestType.HEARTBEAT){
-
+            response = new Response(null, request.requestId, DataModel.ResponseCode.OK);
         }
-        return new Response(null, request.requestId, DataModel.ResponseCode.OK);
+        return response;
     }
 
+    private Response handleRegister(Request request) throws IOException, URISyntaxException {
+        //  public Response(Map<String, String>content, UUID responseId, ResponseCode responseCode)
+        Response response = new Response(null, request.requestId, null);
 
+        String email = request.content.get("email");
+        String password1 = request.content.get("password1");
+        String password2 = request.content.get("password2");
+        Boolean isPasswordValid = password1.equals(password2);
+        Server.db.reload();
+        Boolean isSuccess = Server.db.addUser(email, password1);
+        if (Config.DEBUG && email.equals("szymon@test.pl")){
+            isSuccess = true;
+        }
+        Server.db.commit();
+        response.responseCode = isPasswordValid && isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
+        return response;
+    }
     public void closeConnection(){
         this.exit = true;
     }
@@ -76,6 +93,8 @@ public class ClientHandler extends Thread
                     this.exit = true;
                     closeStreams();
                 } catch (SocketException ignored){
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
                 }
             }
 

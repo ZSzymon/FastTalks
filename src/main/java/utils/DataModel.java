@@ -7,8 +7,8 @@ import java.util.UUID;
 
 public class DataModel implements Serializable{
 
-    Map<String, String> content;
-    String creationDate;
+    public Map<String, String> content;
+    public String creationDate;
     public DataModel(Map<String, String> content) {
         this.content = content;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -22,7 +22,7 @@ public class DataModel implements Serializable{
     public enum ResponseCode{
         NONE, OK, FAIL
     }
-    public UUID getUUID(){
+    public static UUID generateUUID(){
         return UUID.randomUUID();
     }
 

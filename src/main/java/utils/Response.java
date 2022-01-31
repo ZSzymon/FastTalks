@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class Response extends DataModel implements Serializable {
     public UUID responseId;
-    ResponseCode responseCode;
+    public ResponseCode responseCode;
 
     public Response(Map<String, String>content, UUID responseId, ResponseCode responseCode) {
         super(content);
@@ -16,6 +16,10 @@ public class Response extends DataModel implements Serializable {
         this.responseCode = responseCode;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return responseId.equals(((Response) obj).responseId);
+    }
 
     @Override
     public String toString() {

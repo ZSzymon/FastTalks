@@ -3,11 +3,24 @@ package server;
 import java.io.*;
 import java.util.*;
 import java.net.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Server extends Thread
 {
     private ServerSocket ss;
     private Vector<Thread> clients = new Vector<>();
+
+    public static PrimitiveDateBase db;
+    public static ReentrantLock lock;
+    static {
+        try {
+            db = new PrimitiveDateBase("database.json");
+            db.connect();
+            lock = new ReentrantLock();
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Server(int port) throws IOException {
         ss = new ServerSocket(port);

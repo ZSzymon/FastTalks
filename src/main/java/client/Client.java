@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Client {
     Socket socket;
@@ -46,6 +47,7 @@ public class Client {
     public static class Sender extends Thread{
         ObjectOutputStream objectOutputStream;
         ArrayBlockingQueue<Request> requests;
+        ReentrantLock requestLock = new ReentrantLock();
         boolean senderExit = false;
 
         Sender() throws IOException {
@@ -70,17 +72,23 @@ public class Client {
         public void addRequest(Request request){
             this.requests.add(request);
         }
+
         private void sendAll() throws IOException, InterruptedException {
             if(requests.size() ==0){
                 synchronized (this){
                     this.wait();
                 }
             }
-            Set<Request> payload = new HashSet<>(requests);
-            System.out.println("Sending requests.");
-            objectOutputStream.writeObject(payload);
-            System.out.println("Send requests..");
-            reinitializeRequestQueue();
+            requestLock.lock();
+            try{
+                Set<Request> payload = new HashSet<>(requests);
+                System.out.println("Sending requests.");
+                System.out.println("Send requests..");
+                objectOutputStream.writeObject(payload);
+                reinitializeRequestQueue();
+            }finally {
+                requestLock.unlock();
+            }
         }
         private synchronized void reinitializeRequestQueue(){
             requests = null;
@@ -89,11 +97,12 @@ public class Client {
     }
     public class Receiver extends Thread{
         ObjectInputStream objectInputStream;
-        ArrayBlockingQueue<Response> responses;
+        HashMap<UUID, Response> responses;
+        ReentrantLock responsesLock = new ReentrantLock();
         boolean exit = false;
         Receiver(){
             super("Receiver thread.");
-            this.responses = new ArrayBlockingQueue<>(100);
+            this.responses = new HashMap<>();
         }
 
         public synchronized void start(Socket socket) throws IOException {
@@ -124,29 +133,48 @@ public class Client {
 
         private void addResponse(Response response) throws InterruptedException {
             if(response != null){
-                this.responses.put(response);
+                this.responses.put(response.responseId,response);
             }
         }
 
-        public Response getResponse() throws InterruptedException {
-            if (responses.size() > 0){
-                return responses.take();
+        public Response getAnyResponse() throws InterruptedException {
+            Response response=null;
+            try{
+                responsesLock.lock();
+                if (responses.size() > 0){
+                    response = responses.entrySet().iterator().next().getValue();
+                }
+            }finally {
+                responsesLock.unlock();
             }
-            return null;
+            return response;
         }
-
+        public Response getResponse(UUID uuid){
+            Response response = null;
+            try{
+                responsesLock.lock();
+                response = responses.get(uuid);
+            }finally {
+                responsesLock.unlock();
+            }
+            return response;
+        }
         private void reinitializeRequestQueue(){
             responses = null;
-            responses = new ArrayBlockingQueue<>(100);
+            responses = new HashMap<>();
         }
         private void receiveAll() throws IOException, ClassNotFoundException, InterruptedException {
             Set<Response> responses = (Set<Response>) objectInputStream.readObject();
             System.out.println("Read responses.");
 
-            for(Response response: responses){
-                this.addResponse(response);
+            try{
+                responsesLock.lock();
+                for(Response response: responses){
+                    this.addResponse(response);
+                }
+            }finally {
+                responsesLock.unlock();
             }
-
         }
     }
 }
