@@ -15,7 +15,7 @@ public class Client {
     int port;
     public final Sender sender = new Sender();
     public final Receiver receiver = new Receiver();
-
+    public boolean isListenerStarted = false;
     public Client(String host, int port) throws InterruptedException, IOException {
         this.host = host;
         this.port = port;
@@ -28,8 +28,12 @@ public class Client {
         //socket.setSoTimeout(timeoutInterval);
     }
     public void startListener() throws IOException {
-        this.receiver.start(socket);
-        this.sender.start(socket);
+        if(!isListenerStarted){
+            this.receiver.start(socket);
+            this.sender.start(socket);
+            this.isListenerStarted = true;
+        }
+
     }
 
     public void addRequest(Request request) throws InterruptedException {

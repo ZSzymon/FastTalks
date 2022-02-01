@@ -1,8 +1,10 @@
 package server;
 
+import org.jetbrains.annotations.NotNull;
 import utils.*;
 
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -22,57 +24,6 @@ public class ClientHandler extends Thread
     public ClientHandler(Socket s) {
         super("Client Handler:" + (i+1));
         this.s = s;
-    }
-
-    private void sendData(Set<Response> responses) throws IOException {
-        System.out.println("Sending response.");
-        System.out.println(responses);
-        this.objectOutputStream.writeObject(responses);
-        this.objectOutputStream.flush();
-    }
-
-    private Set<Response> handleRequests(Set<Request> requests) throws IOException, URISyntaxException {
-        Set<Response> responses = new HashSet<>();
-        for(Request request: requests){
-            responses.add(this.handleRequest(request));
-        }
-        return responses;
-    }
-    private Response handleRequest(Request request) throws IOException, URISyntaxException {
-        Response response = null;
-        if (request.requestType == DataModel.RequestType.REGISTER) {
-            response = handleRegister(request);
-        } else if (request.requestType == DataModel.RequestType.LOGIN) {
-
-        } else if (request.requestType == DataModel.RequestType.LOGOUT) {
-
-        } else if (request.requestType == DataModel.RequestType.CHAT_MESSAGE) {
-
-        } else if (request.requestType == DataModel.RequestType.HEARTBEAT){
-            response = new Response(null, request.requestId, DataModel.ResponseCode.OK);
-        }
-        return response;
-    }
-
-    private Response handleRegister(Request request) throws IOException, URISyntaxException {
-        //  public Response(Map<String, String>content, UUID responseId, ResponseCode responseCode)
-        Response response = new Response(null, request.requestId, null);
-
-        String email = request.content.get("email");
-        String password1 = request.content.get("password1");
-        String password2 = request.content.get("password2");
-        Boolean isPasswordValid = password1.equals(password2);
-        Server.db.reload();
-        Boolean isSuccess = Server.db.addUser(email, password1);
-        if (Config.DEBUG && email.equals("szymon@test.pl")){
-            isSuccess = true;
-        }
-        Server.db.commit();
-        response.responseCode = isPasswordValid && isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
-        return response;
-    }
-    public void closeConnection(){
-        this.exit = true;
     }
     @Override
     public void run()
@@ -103,9 +54,128 @@ public class ClientHandler extends Thread
         }
     }
 
+    private void sendData(Set<Response> responses) throws IOException {
+        System.out.println("Sending response.");
+        System.out.println(responses);
+        this.objectOutputStream.writeObject(responses);
+        this.objectOutputStream.flush();
+    }
+
+    private Set<Response> handleRequests(Set<Request> requests) throws IOException, URISyntaxException {
+        Set<Response> responses = new HashSet<>();
+        for(Request request: requests){
+            responses.add(this.handleRequest(request));
+        }
+        return responses;
+    }
+    private Response handleRequest(Request request) throws IOException, URISyntaxException {
+        Response response = null;
+        if (request.requestType == DataModel.RequestType.REGISTER) {
+            response = handleRegister(request);
+        } else if (request.requestType == DataModel.RequestType.LOGIN) {
+            response = handleLogin(request);
+        } else if (request.requestType == DataModel.RequestType.LOGOUT) {
+            response = handleLogout(request);
+        } else if (request.requestType == DataModel.RequestType.CHAT_MESSAGE) {
+
+        } else if (request.requestType == DataModel.RequestType.HEARTBEAT){
+            response = new Response(null, request.requestId, DataModel.ResponseCode.OK);
+        }
+        return response;
+    }
+
+    private Response handleRegister(Request request) throws IOException, URISyntaxException {
+        //  public Response(Map<String, String>content, UUID responseId, ResponseCode responseCode)
+        Response response = new Response(null, request.requestId, null);
+
+        String email = request.content.get("email");
+        String password1 = request.content.get("password1");
+        String password2 = request.content.get("password2");
+        Boolean isPasswordValid = password1.equals(password2);
+        Boolean isSuccess = false;
+        Server.dbLock.lock();
+        try{
+            Server.db.reload();
+            isSuccess = Server.db.addUser(email, password1);
+
+            //TODO: remove in develop mode.
+            if (Config.DEBUG && email.equals("szymon@test.pl")){
+                isSuccess = true;
+            }
+            Server.db.commit();
+        }finally {
+            Server.dbLock.unlock();
+        }
+
+        response.responseCode = isPasswordValid && isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
+        return response;
+    }
+
+
+    @NotNull
+    private Response handleLogin(@NotNull Request request) throws IOException, URISyntaxException {
+        Response response = new Response(null, request.requestId, null);
+        String email = request.content.get("email");
+        String password = request.content.get("password1");
+        boolean isSuccess = false;
+        Server.dbLock.lock();
+        try{
+            Server.db.reload();
+            isSuccess = Server.db.exist(email, password);
+            response.responseCode = isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
+        }finally {
+            Server.dbLock.unlock();
+        }
+
+        if(isSuccess){
+            addUser(email);
+        }
+        return response;
+    }
+
+    @NotNull
+    private Response handleLogout(@NotNull Request request) throws IOException, URISyntaxException {
+        Response response = new Response(null, request.requestId, null);
+        String email = request.content.get("email");
+        Server.usersLock.lock();
+        boolean isSuccess = false;
+        try{
+            boolean existInUsers = Server.users.containsKey(email);
+            if(existInUsers && Server.users.get(email).isActive){
+                Server.users.get(email).logout();
+                isSuccess = true;
+            }
+            response.responseCode = isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
+        }finally {
+            Server.usersLock.unlock();
+        }
+
+        return response;
+    }
+
+    public void closeConnection(){
+        this.exit = true;
+    }
+
     private void closeStreams() throws IOException {
         this.objectInputStream.close();
         this.objectOutputStream.close();
         this.s.close();
+    }
+
+    private void addUser(String email){
+        Server.usersLock.lock();
+        try{
+            User user = Server.users.get(email);
+            if(user == null){
+                user = new User(email, objectInputStream, objectOutputStream);
+            }else{
+                user.updateStreams(objectInputStream, objectOutputStream);
+            }
+            user.isActive = true;
+            Server.users.put(email, user);
+        }finally {
+            Server.usersLock.unlock();
+        }
     }
 }

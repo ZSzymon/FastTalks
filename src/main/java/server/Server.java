@@ -10,16 +10,21 @@ public class Server extends Thread
     private ServerSocket ss;
     private Vector<Thread> clients = new Vector<>();
 
+    public static Map<String, User> users = new HashMap<>();
+    public static ReentrantLock usersLock;
     public static PrimitiveDateBase db;
-    public static ReentrantLock lock;
+    public static ReentrantLock dbLock;
     static {
         try {
             db = new PrimitiveDateBase("database.json");
             db.connect();
-            lock = new ReentrantLock();
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
+    }
+    static {
+        dbLock = new ReentrantLock();
+        usersLock = new ReentrantLock();
     }
 
     public Server(int port) throws IOException {

@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -54,7 +55,7 @@ public class PrimitiveDateBase {
     }
 
     public synchronized void reload() throws IOException, URISyntaxException {
-        connect();
+        this.connect();
     }
     public synchronized int usersLenght(){
         return this.db.keySet().size();
@@ -64,6 +65,11 @@ public class PrimitiveDateBase {
         return this.db.containsKey(email);
     }
 
+    public synchronized boolean exist(String email, @NotNull String password){
+        String userPassword = this.db.get(email);
+        return password.equals(userPassword);
+
+    }
     public synchronized boolean addUser(String email, String password){
         if(!exist(email)){
             this.db.put(email, password);
