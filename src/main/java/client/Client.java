@@ -74,7 +74,12 @@ public class Client {
             }
         }
         public void addRequest(Request request){
-            this.requests.add(request);
+            this.requestLock.lock();
+            try{
+                this.requests.add(request);
+            }finally {
+                requestLock.unlock();
+            }
         }
 
         private void sendAll() throws IOException, InterruptedException {
@@ -135,16 +140,16 @@ public class Client {
             exit = true;
         }
 
-        private void addResponse(Response response) throws InterruptedException {
+        private void addResponse(Response response) {
             if(response != null){
                 this.responses.put(response.responseId,response);
             }
         }
 
-        public Response getAnyResponse() throws InterruptedException {
+        public Response getAnyResponse()  {
             Response response=null;
+            responsesLock.lock();
             try{
-                responsesLock.lock();
                 if (responses.size() > 0){
                     response = responses.entrySet().iterator().next().getValue();
                 }
@@ -168,7 +173,7 @@ public class Client {
             responses = new HashMap<>();
         }
         private void receiveAll() throws IOException, ClassNotFoundException, InterruptedException {
-            Set<Response> responses = (Set<Response>) objectInputStream.readObject();
+            Set<Response> responses = (HashSet<Response>) objectInputStream.readObject();
             System.out.println("Read responses.");
 
             try{

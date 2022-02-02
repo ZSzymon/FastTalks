@@ -104,9 +104,56 @@ class ClientTest {
         this.client.addRequest(LoginRequest);
         this.client.startListener();
         Thread.sleep(500);
-        Response LoginResponse = this.client.receiver.getResponse(loginRequestId);
+        Response LoginResponse = waitForResponse(loginRequestId);
+        Response registerResponse = waitForResponse(loginRequestId);
         assertEquals(LoginResponse.responseCode, DataModel.ResponseCode.OK);
     }
+    @Test
+    void registerLoginLogoutRequests() throws InterruptedException, IOException {
+        UUID registerRequestId = UUID.randomUUID();
+        UUID loginRequestId = UUID.randomUUID();
+        UUID logoutRequestId = UUID.randomUUID();
+        HashMap<String, String> payload = new HashMap<>();
+        Pair<String, String> defaultUser = this.defaultUser();
+        payload.put("email", defaultUser.getKey());
+        payload.put("password1", defaultUser.getValue());
+        payload.put("password2", defaultUser.getValue());
+        Request registerRequest = new Request(defaultUser.getKey(), payload, registerRequestId, DataModel.RequestType.REGISTER);
+        Request loginRequest = new Request(defaultUser.getKey(), payload, loginRequestId, DataModel.RequestType.LOGIN);
+        Request logoutRequest = new Request(defaultUser.getKey(), payload, logoutRequestId, DataModel.RequestType.LOGOUT);
+        this.client.startListener();
+        this.client.addRequest(registerRequest);
+        this.client.addRequest(loginRequest);
+        this.client.addRequest(logoutRequest);
+
+
+        Response responseRegister = waitForResponse(registerRequestId);
+        Response responseLogin = waitForResponse(loginRequestId);
+        Response responseLogout = waitForResponse(logoutRequestId);
+
+
+
+
+    }
+    void registerAndloginDefaultUserNotTest() throws InterruptedException, IOException {
+        UUID registerRequestId = UUID.randomUUID();
+        UUID loginRequestId = UUID.randomUUID();
+        HashMap<String, String> payload = new HashMap<>();
+        Pair<String, String> defaultUser = this.defaultUser();
+        payload.put("email", defaultUser.getKey());
+        payload.put("password1", defaultUser.getValue());
+        payload.put("password2", defaultUser.getValue());
+        Request RegisterRequest = new Request(payload, registerRequestId, DataModel.RequestType.REGISTER);
+        Request LoginRequest = new Request(payload, loginRequestId, DataModel.RequestType.LOGIN);
+        this.client.addRequest(RegisterRequest);
+        this.client.addRequest(LoginRequest);
+        this.client.startListener();
+        Thread.sleep(500);
+        Response LoginResponse = waitForResponse(loginRequestId);
+        Response registerResponse = waitForResponse(loginRequestId);
+        assertEquals(LoginResponse.responseCode, DataModel.ResponseCode.OK);
+    }
+
     @Test
     void testLogin() throws IOException, InterruptedException {
         //GIVEN
@@ -127,11 +174,12 @@ class ClientTest {
         assertEquals(response.responseCode, DataModel.ResponseCode.OK);
     }
 
+
     @Test
     void testLogout() throws IOException, InterruptedException {
         //GIVEN
         Pair<String, String> defaultUser = this.defaultUser();
-        registerAndloginDefaultUser();
+        registerAndloginDefaultUserNotTest();
         //WHEN
         HashMap<String, String> payload = new HashMap<>();
         payload.put("email", defaultUser.getKey());
@@ -150,7 +198,6 @@ class ClientTest {
     void testLogoutFail() throws IOException, InterruptedException {
         //GIVEN
         Pair<String, String> defaultUser = this.defaultUser();
-        //loginDefaultUser();
         //WHEN
         HashMap<String, String> payload = new HashMap<>();
         payload.put("email", defaultUser.getKey()+"gregregre");
@@ -226,23 +273,31 @@ class ClientTest {
         payload.put("message", messageString);
         Request request = new Request(email, payload, requestId, DataModel.RequestType.CHAT_MESSAGE);
         Response response = sendRequestGetResponse(request);
-
     }
+    @Test
     void testDownloadMessages() throws IOException, InterruptedException {
         String receiver = defaultUser().getKey();
+        String sender = defaultUser().getKey();
         sendHelloMessage(receiver);
+        UUID requestId = UUID.randomUUID();
+        Request request = new Request(sender,null, requestId, DataModel.RequestType.DOWNLOAD_MESSAGES);
+        Response response =  sendRequestGetResponse(request);
 
+        assertEquals(response.responseCode, DataModel.ResponseCode.OK);
     }
 
-
+    private Response waitForResponse(UUID requestId) throws InterruptedException {
+        Response response = null;
+        while (response == null){
+            response = this.client.receiver.getResponse(requestId);
+            Thread.sleep(10);
+        }
+        return response;
+    }
     Response sendRequestGetResponse(Request request) throws InterruptedException, IOException {
         this.client.addRequest(request);
         this.client.startListener();
-        Response response = null;
-        while (response == null){
-            response = this.client.receiver.getResponse(request.requestId);
-            Thread.sleep(10);
-        }
+        Response response = waitForResponse(request.requestId);
         return response;
     }
     @Test

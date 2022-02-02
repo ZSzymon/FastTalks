@@ -2,9 +2,12 @@ package utils;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 public class Message {
@@ -39,6 +42,16 @@ public class Message {
         Gson gson = new Gson();
         Message message = gson.fromJson(json, Message.class);
         return message;
+    }
+    public static String collectionToJson(Collection<Message> messages){
+        Gson gson = new Gson();
+        String json = gson.toJson(messages, messages.getClass());
+        return json;
+    }
+    public static Collection<Message> fromJson(String json, Type type){
+        Gson gson = new Gson();
+        Collection<Message> messages = gson.fromJson(json, type);
+        return messages;
     }
 
     @Override

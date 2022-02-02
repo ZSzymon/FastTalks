@@ -66,6 +66,7 @@ public class ClientHandler extends Thread
         Set<Response> responses = new HashSet<>();
         for(Request request: requests){
             responses.add(this.handleRequest(request));
+
         }
         return responses;
     }
@@ -96,9 +97,10 @@ public class ClientHandler extends Thread
             response.content.put("details","Request need to contain email.");
             return response;
         }
-        Set messages = getMessages(email);
-        //TODO: messages to jsonList.
-        response.content.put("payload", messages);
+        Set<Message> messages = getMessages(email);
+        String messagesAsString = Message.collectionToJson(messages);
+        response.content.put("payload", messagesAsString);
+        response.responseCode = DataModel.ResponseCode.OK;
         return response;
     }
 
@@ -150,6 +152,24 @@ public class ClientHandler extends Thread
         }finally {
             Server.usersLock.unlock();
         }
+        return user;
+    }
+
+    private User getUser(String email, String password){
+        User user = null;
+        boolean isInDb = false;
+        Server.dbLock.lock();
+        try {
+            isInDb = Server.db.exist(email, password);
+
+        }finally {
+            Server.dbLock.unlock();
+        }
+        if(isInDb){
+            user = getUser(email);
+        }
+
+
         return user;
     }
     private Response handleRegister(Request request) throws IOException, URISyntaxException {
@@ -216,23 +236,12 @@ public class ClientHandler extends Thread
         }
     }
 
-    @NotNull
     private Response handleLogout(@NotNull Request request) throws IOException, URISyntaxException {
         Response response = new Response(null, request.requestId, null);
         String email = request.content.get("email");
-        Server.usersLock.lock();
-        boolean isSuccess = false;
-        try{
-            boolean existInUsers = Server.users.containsKey(email);
-            if(existInUsers && Server.users.get(email).isActive){
-                Server.users.get(email).logout();
-                isSuccess = true;
-            }
-            response.responseCode = isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
-        }finally {
-            Server.usersLock.unlock();
-        }
-
+        String password = request.content.get("password1");
+        User user = getUser(email, password);
+        user.logout();
         return response;
     }
 

@@ -37,8 +37,7 @@ public class User {
         isActive = true;
         lastActive = LocalDateTime.now();
     }
-    public void logout() throws IOException {
-        removeStreams();
+    public void logout() {
         isActive = false;
         lastActive = LocalDateTime.now();
     }

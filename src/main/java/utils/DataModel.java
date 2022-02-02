@@ -17,7 +17,7 @@ public class DataModel implements Serializable{
     }
 
     public enum RequestType{
-        REGISTER, LOGIN, LOGOUT, CHAT_MESSAGE, HEARTBEAT, DOWNLOAD_MESSAGES
+        REGISTER, LOGIN, CHAT_MESSAGE, HEARTBEAT, DOWNLOAD_MESSAGES, LOGOUT
     }
     public enum ResponseCode{
         NONE, OK, FAIL, RECEIVER_NOT_FOUND
