@@ -216,6 +216,25 @@ class ClientTest {
         assertEquals(response.responseCode, DataModel.ResponseCode.FAIL);
     }
 
+    void sendHelloMessage(String receiver) throws IOException, InterruptedException {
+        registerAndloginDefaultUser();
+        String email = defaultUser().getKey();
+        UUID requestId = UUID.randomUUID();
+        HashMap<String, String> payload = new HashMap<>();
+        payload.put("email", email);
+        String messageString = new Message(email, receiver, "Hello World").toJson();
+        payload.put("message", messageString);
+        Request request = new Request(email, payload, requestId, DataModel.RequestType.CHAT_MESSAGE);
+        Response response = sendRequestGetResponse(request);
+
+    }
+    void testDownloadMessages() throws IOException, InterruptedException {
+        String receiver = defaultUser().getKey();
+        sendHelloMessage(receiver);
+
+    }
+
+
     Response sendRequestGetResponse(Request request) throws InterruptedException, IOException {
         this.client.addRequest(request);
         this.client.startListener();

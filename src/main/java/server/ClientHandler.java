@@ -11,6 +11,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 // ClientHandler class
 public class ClientHandler extends Thread
@@ -79,12 +80,37 @@ public class ClientHandler extends Thread
             response = handleLogout(request);
         } else if (request.requestType == DataModel.RequestType.CHAT_MESSAGE) {
             response = handleChatMessage(request);
-        } else if (request.requestType == DataModel.RequestType.HEARTBEAT){
+        } else if(request.requestType == DataModel.RequestType.DOWNLOAD_MESSAGES){
+            response = handleDownloadMessages(request);
+        }else if (request.requestType == DataModel.RequestType.HEARTBEAT){
             response = new Response(null, request.requestId, DataModel.ResponseCode.OK);
         }
         return response;
     }
 
+    private Response handleDownloadMessages(Request request){
+        Response response = new Response(new HashMap<>(), request.requestId, null);
+        String email = request.email;
+        if(!exists(email)){
+            response.responseCode = DataModel.ResponseCode.FAIL;
+            response.content.put("details","Request need to contain email.");
+            return response;
+        }
+        Set messages = getMessages(email);
+        //TODO: messages to jsonList.
+        response.content.put("payload", messages);
+        return response;
+    }
+
+    private Set<Message> getMessages(String email){
+
+        User user = getUser(email);
+        if(!exists(user)){
+            return null;
+        }
+        Set<Message> messages = user.messages;
+        return messages;
+    }
     private void tryAddUser(Request request){
         if(request.email != null){
             addToActiveUsers(request.email);
