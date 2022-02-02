@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="FastTalks" target="1.8" />
+      <module name="FastTalks" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>

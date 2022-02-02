@@ -20,7 +20,7 @@ public class DataModel implements Serializable{
         REGISTER, LOGIN, LOGOUT, CHAT_MESSAGE, HEARTBEAT
     }
     public enum ResponseCode{
-        NONE, OK, FAIL
+        NONE, OK, FAIL, RECEIVER_NOT_FOUND
     }
     public static UUID generateUUID(){
         return UUID.randomUUID();

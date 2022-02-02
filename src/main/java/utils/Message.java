@@ -20,7 +20,6 @@ public class Message {
         this.receiverEmail = receiverEmail;
         this.content = content;
         this.uuid = UUID.randomUUID();
-
         initDateTime();
     }
 
@@ -35,6 +34,7 @@ public class Message {
         String json = gson.toJson(this, this.getClass());
         return json;
     }
+
     public static Message fromJson(String json){
         Gson gson = new Gson();
         Message message = gson.fromJson(json, Message.class);

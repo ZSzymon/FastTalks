@@ -18,6 +18,7 @@ public class Request extends DataModel implements Serializable {
         super(content);
         this.requestId = requestId;
         this.requestType = requestType;
+        this.email = null;
     }
     public Request(String email, Map<String, String>content, UUID requestId, RequestType requestType) {
         super(content);

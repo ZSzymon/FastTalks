@@ -70,6 +70,7 @@ public class ClientHandler extends Thread
     }
     private Response handleRequest(Request request) throws IOException, URISyntaxException {
         Response response = null;
+        tryAddUser(request);
         if (request.requestType == DataModel.RequestType.REGISTER) {
             response = handleRegister(request);
         } else if (request.requestType == DataModel.RequestType.LOGIN) {
@@ -77,13 +78,54 @@ public class ClientHandler extends Thread
         } else if (request.requestType == DataModel.RequestType.LOGOUT) {
             response = handleLogout(request);
         } else if (request.requestType == DataModel.RequestType.CHAT_MESSAGE) {
-
+            response = handleChatMessage(request);
         } else if (request.requestType == DataModel.RequestType.HEARTBEAT){
             response = new Response(null, request.requestId, DataModel.ResponseCode.OK);
         }
         return response;
     }
 
+    private void tryAddUser(Request request){
+        if(request.email != null){
+            addToActiveUsers(request.email);
+        }
+    }
+    public boolean exists(Object o){
+        return o != null;
+    }
+    private Response handleChatMessage(Request request){
+        Response response = new Response(new HashMap<>(), request.requestId, null);
+
+        Message message = Message.fromJson(request.content.get("message"));
+        User senderUser = getUser(message.senderEmail);
+        User receiverUser = getUser(message.receiverEmail);
+        boolean isAllOkey = true;
+        if(exists(senderUser)){
+            senderUser.messages.add(message);
+        }else{
+            isAllOkey = false;
+            return response;
+        }
+        if(exists(receiverUser)){
+            receiverUser.messages.add(message);
+        }else{
+            isAllOkey = false;
+        }
+        response.responseCode = isAllOkey ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
+        return response;
+    }
+
+
+    private User getUser(String email){
+        Server.usersLock.lock();
+        User user;
+        try{
+            user = Server.users.get(email);
+        }finally {
+            Server.usersLock.unlock();
+        }
+        return user;
+    }
     private Response handleRegister(Request request) throws IOException, URISyntaxException {
         //  public Response(Map<String, String>content, UUID responseId, ResponseCode responseCode)
         Response response = new Response(null, request.requestId, null);
@@ -111,7 +153,6 @@ public class ClientHandler extends Thread
         return response;
     }
 
-
     @NotNull
     private Response handleLogin(@NotNull Request request) throws IOException, URISyntaxException {
         Response response = new Response(null, request.requestId, null);
@@ -128,9 +169,25 @@ public class ClientHandler extends Thread
         }
 
         if(isSuccess){
-            addUser(email);
+            addToActiveUsers(email);
         }
         return response;
+    }
+
+    private void addToActiveUsers(String email){
+        Server.usersLock.lock();
+        try{
+            User user = Server.users.get(email);
+            if(user == null){
+                user = new User(email, objectInputStream, objectOutputStream);
+            }else{
+                user.updateStreams(objectInputStream, objectOutputStream);
+            }
+            user.login();
+            Server.users.put(email, user);
+        }finally {
+            Server.usersLock.unlock();
+        }
     }
 
     @NotNull
@@ -163,19 +220,5 @@ public class ClientHandler extends Thread
         this.s.close();
     }
 
-    private void addUser(String email){
-        Server.usersLock.lock();
-        try{
-            User user = Server.users.get(email);
-            if(user == null){
-                user = new User(email, objectInputStream, objectOutputStream);
-            }else{
-                user.updateStreams(objectInputStream, objectOutputStream);
-            }
-            user.isActive = true;
-            Server.users.put(email, user);
-        }finally {
-            Server.usersLock.unlock();
-        }
-    }
+
 }

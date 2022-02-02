@@ -3,6 +3,7 @@ import client.Client;
 import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 import utils.DataModel;
+import utils.Message;
 import utils.Request;
 import utils.Response;
 
@@ -89,7 +90,7 @@ class ClientTest {
         Thread.sleep(500);
     }
     @Test
-    void loginDefaultUser() throws InterruptedException, IOException {
+    void registerAndloginDefaultUser() throws InterruptedException, IOException {
         UUID registerRequestId = UUID.randomUUID();
         UUID loginRequestId = UUID.randomUUID();
         HashMap<String, String> payload = new HashMap<>();
@@ -130,7 +131,7 @@ class ClientTest {
     void testLogout() throws IOException, InterruptedException {
         //GIVEN
         Pair<String, String> defaultUser = this.defaultUser();
-        loginDefaultUser();
+        registerAndloginDefaultUser();
         //WHEN
         HashMap<String, String> payload = new HashMap<>();
         payload.put("email", defaultUser.getKey());
@@ -173,9 +174,9 @@ class ClientTest {
         payload.put("password1", "test");
         payload.put("password2", "test");
         Request request = new Request(payload, requestId, DataModel.RequestType.REGISTER);
+
         this.client.startListener();
         this.client.addRequest(request);
-
         Thread.sleep(500);
 
         Response response = this.client.receiver.getResponse(requestId);
@@ -184,13 +185,56 @@ class ClientTest {
     }
 
     @Test
+    void testMessageSuccess() throws InterruptedException, IOException {
+        registerAndloginDefaultUser();
+        String email = defaultUser().getKey();
+        String password = defaultUser().getValue();
+        UUID requestId = UUID.randomUUID();
+        HashMap<String, String> payload = new HashMap<>();
+        payload.put("email", email);
+        String messageString = new Message(email, email, "Hello World").toJson();
+        payload.put("message", messageString);
+        Request request = new Request(email,payload, requestId, DataModel.RequestType.CHAT_MESSAGE);
+        Response response = sendRequestGetResponse(request);
+        System.out.println(response);
+        assertEquals(response.responseCode, DataModel.ResponseCode.OK);
+    }
+
+    @Test
+    void testMessageFail() throws InterruptedException, IOException {
+        registerAndloginDefaultUser();
+        String email = defaultUser().getKey();
+        String password = defaultUser().getValue();
+        UUID requestId = UUID.randomUUID();
+        HashMap<String, String> payload = new HashMap<>();
+        payload.put("email", email);
+        String messageString = new Message(email, email+"NOTEXIST.", "Hello World").toJson();
+        payload.put("message", messageString);
+        Request request = new Request(email,payload, requestId, DataModel.RequestType.CHAT_MESSAGE);
+        Response response = sendRequestGetResponse(request);
+        System.out.println(response);
+        assertEquals(response.responseCode, DataModel.ResponseCode.FAIL);
+    }
+
+    Response sendRequestGetResponse(Request request) throws InterruptedException, IOException {
+        this.client.addRequest(request);
+        this.client.startListener();
+        Response response = null;
+        while (response == null){
+            response = this.client.receiver.getResponse(request.requestId);
+            Thread.sleep(10);
+        }
+        return response;
+    }
+    @Test
     void testRegisterFail() throws InterruptedException, IOException {
         UUID requestId = UUID.randomUUID();
         HashMap<String, String> payload = new HashMap<>();
-        payload.put("email", "szymon@test2.pl");
+        String email = "szymon@test2.pl";
+        payload.put("email", email);
         payload.put("password1", "test");
         payload.put("password2", "test");
-        Request request = new Request(payload, requestId, DataModel.RequestType.REGISTER);
+        Request request = new Request(email, payload, requestId, DataModel.RequestType.REGISTER);
         this.client.addRequest(request);
         this.client.startListener();
         Thread.sleep(500);
