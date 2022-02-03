@@ -40,8 +40,9 @@ public class Request extends DataModel implements Serializable {
         return request;
     }
     @NotNull
-    private static Request registerRequest(String email, String password1, String password2, UUID requestId){
+    public static Request registerRequest(String email, String password1, String password2){
         Map<String, String> hashMap = new HashMap<>();
+        UUID requestId = UUID.randomUUID();
         hashMap.put("email", email);
         hashMap.put("password1", password1);
         hashMap.put("password2", password2);
@@ -49,10 +50,11 @@ public class Request extends DataModel implements Serializable {
         return request;
     }
     @NotNull
-    private static Request loginRequest(String email, String password, UUID requestId){
+    public static Request loginRequest(String email, String password){
+        UUID requestId = UUID.randomUUID();
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("email", email);
-        hashMap.put("password", password);
+        hashMap.put("password1", password);
         Request request = new Request(email, hashMap, requestId, RequestType.LOGIN);
         return request;
     }

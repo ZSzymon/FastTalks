@@ -36,16 +36,16 @@ public class Client {
 
     }
 
-    public void addRequest(Request request) throws InterruptedException {
-        if (request != null){
-            sender.addRequest(request);
-            if(this.sender.getState() == Thread.State.WAITING){
-                synchronized (this.sender){
-                    this.sender.notify();
-                }
+    public void addRequest(Request request){
+        if (request==null)
+            return;
+
+        sender.addRequest(request);
+        if(this.sender.getState() == Thread.State.WAITING){
+            synchronized (this.sender){
+                this.sender.notify();
             }
         }
-
     }
 
     public static class Sender extends Thread{
@@ -127,9 +127,6 @@ public class Client {
                 } catch (IOException e) {
                     System.out.println("IO excetion");
                     e.printStackTrace();
-                } catch (InterruptedException e) {
-                    System.out.println("Interrupted exception");
-                    e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     System.out.println("Class not found exception");
                     e.printStackTrace();
@@ -158,6 +155,19 @@ public class Client {
             }
             return response;
         }
+
+        public Response waitForResponse(UUID requestId){
+            Response response = null;
+            while (response == null){
+                response = this.getResponse(requestId);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return response;
+        }
         public Response getResponse(UUID uuid){
             Response response = null;
             try{
@@ -172,7 +182,7 @@ public class Client {
             responses = null;
             responses = new HashMap<>();
         }
-        private void receiveAll() throws IOException, ClassNotFoundException, InterruptedException {
+        private void receiveAll() throws IOException, ClassNotFoundException {
             Set<Response> responses = (HashSet<Response>) objectInputStream.readObject();
             System.out.println("Read responses.");
 

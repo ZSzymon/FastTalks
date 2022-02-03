@@ -1,6 +1,7 @@
 package server;
 
 import org.jetbrains.annotations.NotNull;
+import server.exceptions.RegisterException;
 import utils.*;
 
 
@@ -62,6 +63,65 @@ public class ClientHandler extends Thread
         this.objectOutputStream.flush();
     }
 
+    private abstract class Handler{
+        private DataModel.RequestType responsibleFor;
+
+        Handler(DataModel.RequestType responsibleFor){
+            this.responsibleFor = responsibleFor;
+        }
+        public abstract Response handle(Request request);
+
+
+    }
+    private class RegisterHandler extends Handler{
+
+        RegisterHandler() {
+            super(DataModel.RequestType.REGISTER);
+        }
+
+        @Override
+        public Response handle(Request request){
+            Response response = new Response(new HashMap<>(), request.requestId, null);
+            try {
+                response = this._handle(request);
+            }catch (RegisterException e){
+                response.responseCode = DataModel.ResponseCode.FAIL;
+                response.content.put("Exception", "Register exception");
+            }
+            return response;
+        }
+
+        public Response _handle(Request request) throws RegisterException {
+            Response response = new Response(null, request.requestId, null);
+            Boolean isSuccess = false, isPasswordValid = false;
+
+            try{
+                String email = request.content.get("email");
+                String password1 = request.content.get("password1");
+                String password2 = request.content.get("password2");
+                isPasswordValid = password1.equals(password2);
+                isSuccess = false;
+                Server.dbLock.lock();
+                try{
+                    Server.db.reload();
+                    isSuccess = Server.db.addUser(email, password1);
+
+                    //TODO: remove in develop mode.
+                    if (Config.DEBUG && email.equals("szymon@test.pl")){
+                        isSuccess = true;
+                    }
+                    Server.db.commit();
+                }finally {
+                    Server.dbLock.unlock();
+                }
+            } catch (IOException | URISyntaxException e) {
+                throw new RegisterException("Exception occerred in registered method.", e);
+            }
+            response.responseCode = isPasswordValid && isSuccess ? DataModel.ResponseCode.OK : DataModel.ResponseCode.FAIL;
+            return response;
+        }
+    }
+
     private Set<Response> handleRequests(Set<Request> requests) throws IOException, URISyntaxException {
         Set<Response> responses = new HashSet<>();
         for(Request request: requests){
@@ -74,7 +134,9 @@ public class ClientHandler extends Thread
         Response response = null;
         tryAddUser(request);
         if (request.requestType == DataModel.RequestType.REGISTER) {
-            response = handleRegister(request);
+            //I Attempted to replace this big if else to chain of responsibilities.
+            //but it is going to produce a lot more code than it is now.
+            response = new RegisterHandler().handle(request);
         } else if (request.requestType == DataModel.RequestType.LOGIN) {
             response = handleLogin(request);
         } else if (request.requestType == DataModel.RequestType.LOGOUT) {

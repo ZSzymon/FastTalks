@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -17,7 +18,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@static/images/icon-removebg.png" />
+                  <Image url="@icon-removebg.png" />
                </image>
                <effect>
                   <DropShadow>
@@ -27,10 +28,11 @@
                   </DropShadow>
                </effect>
             </ImageView>
-            <TextField fx:id="login" alignment="CENTER" prefHeight="26.0" prefWidth="230.0" promptText="login" />
-            <PasswordField alignment="CENTER" promptText="password" />
+            <TextField fx:id="loginField" alignment="CENTER" prefHeight="26.0" prefWidth="230.0" promptText="login" />
+            <PasswordField fx:id="passwordField" alignment="CENTER" promptText="password" />
             <Button mnemonicParsing="false" onAction="#login" text="Login" />
             <Hyperlink ellipsisString="" onAction="#openRegisterScene" prefHeight="46.0" prefWidth="160.0" text="Don't have account? Sign up" underline="true" />
+            <Label fx:id="errorLabel" />
          </children>
       </VBox>
    </children>
