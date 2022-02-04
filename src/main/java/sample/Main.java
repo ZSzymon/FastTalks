@@ -5,13 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
     public static Client clientBackend;
-
+    public static Pair<String, String> userInfo = new Pair<>("", "");
     static {
         try {
             clientBackend = new Client("localhost", 8889);

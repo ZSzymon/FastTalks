@@ -1,8 +1,9 @@
 package client;
 
-import javafx.stage.Stage;
+import com.google.gson.reflect.TypeToken;
 import utils.*;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -13,8 +14,9 @@ public class Client {
     String host;
     boolean exit = false;
     int port;
-    public final Sender sender = new Sender();
+    private final Sender sender = new Sender();
     public final Receiver receiver = new Receiver();
+    private Map<String, Conversation> conversations = new HashMap<>();
     public boolean isListenerStarted = false;
     public Client(String host, int port) throws InterruptedException, IOException {
         this.host = host;
@@ -34,6 +36,63 @@ public class Client {
             this.isListenerStarted = true;
         }
 
+    }
+    public boolean sendChatMessage(String senderEmail, String receiverEmail, String messageText){
+        if(receiverEmail == null){
+            return false;
+        }
+
+        if(receiverEmail.equals("") || messageText.equals("")){
+            return false;
+        }
+        UUID requestId = UUID.randomUUID();
+        Message message = new Message(senderEmail, receiverEmail, messageText);
+        String messageString = message.toJson();
+
+        HashMap<String, String> payload = new HashMap<>();
+        payload.put("message", messageString);
+        payload.put("email", senderEmail);
+
+        Request request = new Request(senderEmail, payload, requestId, DataModel.RequestType.CHAT_MESSAGE);
+        addRequest(request);
+        Response response = this.receiver.waitForResponse(request.requestId);
+
+        if (response.responseCode.equals(DataModel.ResponseCode.OK)){
+            addToConversationAsSender(message);
+        }
+        return response.responseCode.equals(DataModel.ResponseCode.OK);
+
+    }
+
+    public void downloadConversations(String email){
+        UUID requestId = UUID.randomUUID();
+        Request request = new Request(email,null, requestId, DataModel.RequestType.DOWNLOAD_MESSAGES);
+        addRequest(request);
+        Response response = this.receiver.waitForResponse(request.requestId);
+        Type type = new TypeToken<HashSet<Message>>(){}.getType();
+        Set<Message> messages = (Set<Message>) Message.fromJson(response.content.get("payload"), type);
+        messages.forEach(this::addToConversationAsReceiver);
+    }
+
+    private void addToConversationAsSender(Message message) {
+        String receiver = message.receiverEmail;
+        if(conversations.get(receiver) == null){
+            conversations.put(receiver, new Conversation(message));
+        }else{
+            conversations.get(receiver).add(message);
+        }
+    }
+    private void addToConversationAsReceiver(Message message) {
+        String sender = message.senderEmail;
+        if(conversations.get(sender) == null){
+            conversations.put(sender, new Conversation(message));
+        }else{
+            conversations.get(sender).add(message);
+        }
+    }
+
+    public Conversation getConversation(String email){
+        return conversations.get(email);
     }
 
     public void addRequest(Request request){

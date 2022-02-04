@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.util.Pair;
 import utils.DataModel;
 import utils.Request;
 import utils.Response;
@@ -41,6 +42,7 @@ public class LoginController extends MyController {
 //
         if(response.responseCode.equals(DataModel.ResponseCode.OK)){
             errorLabel.setText("");
+            Main.userInfo = new Pair<>(login, password);
             changeScene("chatter.fxml", event);
         }else{
             errorLabel.setText("Wrong login or password.");

@@ -183,6 +183,7 @@ public class ClientHandler extends Thread
     public boolean exists(Object o){
         return o != null;
     }
+
     private Response handleChatMessage(Request request){
         Response response = new Response(new HashMap<>(), request.requestId, null);
 

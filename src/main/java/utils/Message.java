@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-public class Message {
+public class Message implements Comparable<Message>{
     public String senderEmail;
     public String receiverEmail;
     public String content;
@@ -64,6 +64,12 @@ public class Message {
                 content.equals(message.content) &&
                 creationDate.equals(message.creationDate) &&
                 Objects.equals(uuid, message.uuid);
+    }
+
+    @Override
+    public int compareTo(Message message){
+        return this.creationDate.compareTo(message.creationDate);
+
     }
 
     @Override
