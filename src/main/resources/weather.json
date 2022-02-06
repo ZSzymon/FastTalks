@@ -1,0 +1,12 @@
+{"coord":{"lon":22.1397,"lat":50.5199},
+  "weather":[{"id":500,"main":"Rain","description":"słabe opady deszczu","icon":"10n"}],
+  "base":"stations",
+  "main":{"temp":3.73,"feels_like":-0.21,"temp_min":3.25,"temp_max":6.1,"pressure":1000,"humidity":81},
+  "visibility":10000,
+  "wind":{"speed":4.92,"deg":153,"gust":12.96},
+  "rain":{"1h":0.31},
+  "clouds":{"all":100},
+  "dt":1644178336,
+  "sys":{"type":2,"id":2000448,"country":"PL","sunrise":1644127158,"sunset":1644161504},
+  "timezone":3600,"id":763829,"name":"Nisko","cod":200,
+}

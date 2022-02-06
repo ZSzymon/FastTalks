@@ -62,8 +62,12 @@
                      <children>
                         <TextField fx:id="newFriendField" promptText="emial" />
                         <Button fx:id="addFriendButton" mnemonicParsing="false" onAction="#handleAddFriend" text="Add Friend" />
+                        <Label text="                                                         " />
                      </children>
                   </VBox>
+                  <Label text="Current Wheater for Lublin" />
+                  <Label fx:id="descriptionLabel" text="Description: " />
+                  <Label fx:id="temperatureLabel" text="Temperature: " />
                </children></VBox>
             <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <children>

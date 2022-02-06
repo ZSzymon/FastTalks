@@ -3,11 +3,13 @@ package sample;
 import client.Conversation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonToken;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Pair;
 import utils.DataModel;
 import utils.Message;
 import utils.Request;
@@ -19,6 +21,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Array;
 import java.util.*;
+
+import static sample.weather.WeatherDownloader.getDescriptionAndCurrentTemp;
 
 public class ChatterController extends MyController {
 
@@ -41,6 +45,13 @@ public class ChatterController extends MyController {
 
     @FXML
     private Button addFriendButton;
+
+    @FXML
+    private Label temperatureLabel;
+
+    @FXML
+    private Label descriptionLabel;
+
 
     private Thread refresher;
 
@@ -84,6 +95,24 @@ public class ChatterController extends MyController {
     public void initialize() throws URISyntaxException, FileNotFoundException {
         initComboBoxList();
         loggedAsLabel.setText("Logged as: "+ Main.userInfo.getKey());
+        initRefresher();
+        initWeather();
+    }
+
+    void initWeather(){
+        Pair<String, String> weather= null;
+        try {
+            weather = getDescriptionAndCurrentTemp();
+            descriptionLabel.setText(descriptionLabel.getText()+" "+ weather.getKey());
+            temperatureLabel.setText(temperatureLabel.getText()+" "+ weather.getValue());
+
+        } catch (InterruptedException | IOException | URISyntaxException e) {
+            System.out.println("Weather initialize failed.");
+            e.printStackTrace();
+        }
+
+    }
+    void initRefresher(){
         refresher = new Thread(() -> {
             while(true){
                 System.out.println("Auto refreshing conversation.");
@@ -97,7 +126,6 @@ public class ChatterController extends MyController {
         });
         refresher.start();
     }
-
     @FXML
     void logOut(ActionEvent event) throws IOException {
         changeScene("loginScene.fxml", event);
