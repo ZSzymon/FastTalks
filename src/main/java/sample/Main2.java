@@ -20,6 +20,12 @@ public class Main2 extends Application {
             clientBackend.startListener();
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
+            try {
+                clientBackend.reconnectIn(2);
+            } catch (IOException ex) {
+                System.out.println("Recconnect failed. Trying to reconnect.");
+                ex.printStackTrace();
+            }
         }
     }
 

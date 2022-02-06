@@ -215,6 +215,9 @@ public class ClientHandler extends Thread
         }finally {
             Server.usersLock.unlock();
         }
+        if(user ==null){
+            user = createUser(email);
+        }
         return user;
     }
 
@@ -282,7 +285,19 @@ public class ClientHandler extends Thread
         }
         return response;
     }
-
+    private User createUser(String email){
+        Server.usersLock.lock();
+        User user = null;
+        try{
+            user = Server.users.get(email);
+            if(user == null)
+                user = new User(email);
+            Server.users.put(email, user);
+        }finally {
+            Server.usersLock.unlock();
+        }
+        return user;
+    }
     private void addToActiveUsers(String email){
         Server.usersLock.lock();
         try{

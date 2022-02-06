@@ -23,6 +23,12 @@ public class User {
         this.isActive = true;
         this.messages= new HashSet<>();
     }
+    public User(String email) {
+        this.email = email;
+        this.isActive = false;
+        this.messages= new HashSet<>();
+    }
+
     public void updateStreams(ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream){
         this.objectInputStream = objectInputStream;
         this.objectOutputStream = objectOutputStream;

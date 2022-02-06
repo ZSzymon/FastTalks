@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -43,19 +44,27 @@
                   <Label fx:id="errorLabel" />
                </children>
             </VBox>
-            <VBox alignment="CENTER">
+            <VBox alignment="CENTER_LEFT">
                <children>
                   <HBox>
                      <children>
                         <ComboBox fx:id="friendBox" prefHeight="26.0" prefWidth="197.0" promptText="Choose Friend" />
-                        <Label fx:id="loggedAsLabel" text="Label" />
                      </children>
                   </HBox>
+                  <Label fx:id="loggedAsLabel" text="Label" />
                </children>
             </VBox>
             <ListView fx:id="textMessages" prefHeight="248.0" prefWidth="395.0" GridPane.rowIndex="1" />
             <TextArea fx:id="messageToSend" prefHeight="76.0" prefWidth="400.0" GridPane.rowIndex="2" />
-            <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <VBox alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <TextField fx:id="newFriendField" promptText="emial" />
+                        <Button fx:id="addFriendButton" mnemonicParsing="false" onAction="#handleAddFriend" text="Add Friend" />
+                     </children>
+                  </VBox>
+               </children></VBox>
             <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <children>
                   <ImageView fitHeight="69.0" fitWidth="75.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">

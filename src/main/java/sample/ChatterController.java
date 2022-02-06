@@ -7,10 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import utils.DataModel;
 import utils.Message;
 import utils.Request;
@@ -39,6 +36,15 @@ public class ChatterController extends MyController {
     @FXML
     private Label loggedAsLabel;
 
+    @FXML
+    private TextField newFriendField;
+
+    @FXML
+    private Button addFriendButton;
+
+    private Thread refresher;
+
+
     private synchronized static File getFileFromResource(String fileName) throws URISyntaxException {
 
         ClassLoader classLoader = ChatterController.class.getClassLoader();
@@ -50,6 +56,18 @@ public class ChatterController extends MyController {
             return new File(resource.toURI());
         }
 
+    }
+
+    @FXML
+    void handleAddFriend(ActionEvent event){
+        String newFriendEmail = newFriendField.getText();
+        newFriendField.clear();
+        if(newFriendEmail != null) {
+            boolean isThereAlready = friendBox.getItems().stream().anyMatch(newFriendEmail::equals);
+            if(!isThereAlready) {
+                friendBox.getItems().add(newFriendEmail);
+            }
+        }
     }
 
     public void initComboBoxList() throws URISyntaxException, FileNotFoundException {
@@ -66,6 +84,18 @@ public class ChatterController extends MyController {
     public void initialize() throws URISyntaxException, FileNotFoundException {
         initComboBoxList();
         loggedAsLabel.setText("Logged as: "+ Main.userInfo.getKey());
+        refresher = new Thread(() -> {
+            while(true){
+                System.out.println("Auto refreshing conversation.");
+                downloadMessagesForCurrentSelectedReceiver();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        refresher.start();
     }
 
     @FXML
@@ -90,6 +120,7 @@ public class ChatterController extends MyController {
 
         if(result){
             Conversation conversation = Main.clientBackend.getConversation(receiver);
+            messageToSend.clear();
             updateMessagesList(conversation);
         }else{
             errorLabel.setText("Error has occered on server.");

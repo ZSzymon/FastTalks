@@ -27,6 +27,16 @@ public class Request extends DataModel implements Serializable {
         this.requestType = requestType;
     }
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "requestId=" + requestId +
+                ", requestType=" + requestType +
+                ", email='" + email + '\'' +
+                ", creationDate='" + creationDate + '\'' +
+                '}';
+    }
+
     private static Request messageRequest(UUID requestId, String senderEmail, String receiverMail, String message){
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("sender", senderEmail);

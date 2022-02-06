@@ -1,1 +1,8 @@
-{"jacek@gmail.com":"test"}
+{
+  "jacek@gmail.com":"test",
+  "szymon@gmail.com":"test",
+  "darek@gmail.com":"test",
+  "marek@gmail.com":"test",
+  "admin@gmail.com": "test",
+  "test": "test"
+}

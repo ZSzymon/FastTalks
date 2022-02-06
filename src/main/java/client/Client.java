@@ -23,11 +23,30 @@ public class Client {
         this.port = port;
 
     }
-    public void connect() throws IOException, ConnectException{
+    public void connect() throws IOException{
         socket = new Socket(host, port);
         socket.setKeepAlive(true);
         //int timeoutInterval = 200;
         //socket.setSoTimeout(timeoutInterval);
+    }
+    public void stopListener(){
+        if(sender != null){
+            sender.exit();
+        }
+        if(receiver != null){
+            receiver.exit();
+        }
+        isListenerStarted = false;
+    }
+    public void reconnectIn(int seconds) throws IOException{
+        System.out.println("Trying to connect to server in: " + seconds + " seconds.");
+        try {
+            Thread.sleep(seconds*1000);
+            connect();
+            startListener();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     public void startListener() throws IOException {
         if(!isListenerStarted){
@@ -113,11 +132,12 @@ public class Client {
         ReentrantLock requestLock = new ReentrantLock();
         boolean senderExit = false;
 
-        Sender() throws IOException {
+        Sender(){
             super("Sender thread.");
             this.requests = new ArrayBlockingQueue<>(100);
         }
-        public synchronized void start(Socket socket) throws IOException {
+
+        synchronized void start(Socket socket) throws IOException {
             this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             super.start();
         }
@@ -131,6 +151,9 @@ public class Client {
                     e.printStackTrace();
                 }
             }
+        }
+        public void exit(){
+            senderExit = true;
         }
         public void addRequest(Request request){
             this.requestLock.lock();
@@ -150,8 +173,8 @@ public class Client {
             requestLock.lock();
             try{
                 Set<Request> payload = new HashSet<>(requests);
-                System.out.println("Sending requests.");
-                System.out.println("Send requests..");
+                System.out.println("Sending: ");
+                requests.forEach(System.out::println);
                 objectOutputStream.writeObject(payload);
                 reinitializeRequestQueue();
             }finally {
@@ -160,7 +183,7 @@ public class Client {
         }
         private synchronized void reinitializeRequestQueue(){
             requests = null;
-            requests = new ArrayBlockingQueue<>(1000);
+            requests = new ArrayBlockingQueue<>(100);
         }
     }
     public class Receiver extends Thread{
@@ -179,7 +202,7 @@ public class Client {
         }
         @Override
         public void run() {
-            while (true){
+            while (!exit){
                 try{
                     receiveAll();
                 }catch (SocketTimeoutException ignored){
@@ -243,11 +266,12 @@ public class Client {
         }
         private void receiveAll() throws IOException, ClassNotFoundException {
             Set<Response> responses = (HashSet<Response>) objectInputStream.readObject();
-            System.out.println("Read responses.");
 
             try{
                 responsesLock.lock();
+                System.out.println("Got Responses: ");
                 for(Response response: responses){
+                    System.out.println(response.toString());
                     this.addResponse(response);
                 }
             }finally {
