@@ -4,11 +4,16 @@ import client.Conversation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonToken;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 import javafx.util.Pair;
 import utils.DataModel;
 import utils.Message;
@@ -21,6 +26,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Array;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import static sample.weather.WeatherDownloader.getDescriptionAndCurrentTemp;
 
@@ -51,9 +57,6 @@ public class ChatterController extends MyController {
 
     @FXML
     private Label descriptionLabel;
-
-
-    private Thread refresher;
 
 
     private synchronized static File getFileFromResource(String fileName) throws URISyntaxException {
@@ -96,10 +99,12 @@ public class ChatterController extends MyController {
         initComboBoxList();
         loggedAsLabel.setText("Logged as: "+ Main.userInfo.getKey());
         initRefresher();
-        initWeather();
+        Platform.runLater(new Thread(this::initWeather));
+
+
     }
 
-    void initWeather(){
+    private void initWeather(){
         Pair<String, String> weather= null;
         try {
             weather = getDescriptionAndCurrentTemp();
@@ -113,21 +118,14 @@ public class ChatterController extends MyController {
 
     }
     void initRefresher(){
-        refresher = new Thread(() -> {
-            while(true){
-                System.out.println("Auto refreshing conversation.");
-                downloadMessagesForCurrentSelectedReceiver();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        refresher.start();
+        Timeline refresher = new Timeline(
+                new KeyFrame(Duration.seconds(2),
+                        event -> downloadMessagesForCurrentSelectedReceiver()));
+        refresher.setCycleCount(Timeline.INDEFINITE);
+        refresher.play();
     }
     @FXML
-    void logOut(ActionEvent event) throws IOException {
+    void logOut(ActionEvent event) throws IOException{
         changeScene("loginScene.fxml", event);
     }
 
@@ -163,6 +161,9 @@ public class ChatterController extends MyController {
         }
         Main.clientBackend.downloadConversations(email);
         String currentSelectedReceiver = this.friendBox.getValue();
+        if(currentSelectedReceiver == null){
+            return;
+        }
         Conversation conversation = Main.clientBackend.getConversation(currentSelectedReceiver);
         updateMessagesList(conversation);
     }
