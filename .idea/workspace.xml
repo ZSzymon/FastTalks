@@ -1,41 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Responser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/utils/PasswordValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/tests/server/RequestAnalyserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/users/RequestAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/RequestAnalyser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/users/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/users/users.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/DataModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/DataModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/PrimitiveDateBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/PrimitiveDateBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Request.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/tests/tests/ClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/tests/client/ClientTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/tests/tests/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/tests/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/tests/tests/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/tests/server/ServerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/utils/PrimitiveDateBaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/tests/utils/PrimitiveDateBaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/client/Client$MessageListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/client/Client$MessageListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/client/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/server/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/server/ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/server/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/server/Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/server/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/usertests.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/usertests.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/DataModel$RequestType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/DataModel$RequestType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/DataModel$ResponseCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/DataModel$ResponseCode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/DataModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/DataModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/PrimitiveDateBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/PrimitiveDateBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/Request.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/utils/Response.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/utils/Response.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/ClientTest$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/ClientTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/Config.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/tests/ServerTest.class" beforeDir="false" />
+    <list default="true" id="2692c928-7ea9-4b7a-bed7-248def0a7e58" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/out/production/FastTalks/META-INF/FastTalks.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/ClientExec.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/ChatterController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/MyController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/RegisterController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/static/images/icon-removebg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/ClientModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/RequestAnalyser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Responser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/DataModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/PasswordValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/PrimitiveDateBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Request.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Response.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/chatter.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/loginScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/registerScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/users.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/usertests.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/tests/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/tests/client/ClientTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/tests/server/RequestAnalyserTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/tests/server/ServerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/tests/utils/PrimitiveDateBaseTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/FastTalks.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/chatter.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/client/Client$MessageListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/client/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/client/ClientExec.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/loginScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/registerScene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/ChatterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/MyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/RegisterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/ClientHandler$Receiver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/ClientHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/ClientModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/RequestAnalyser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/Responser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/Server.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/server/users/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/users.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/usertests.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/DataModel$RequestType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/DataModel$ResponseCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/DataModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/PasswordValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/PrimitiveDateBase$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/PrimitiveDateBase.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/Request.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/Response.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/FastTalks.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/client/ClientTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/client/ClientTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/server/RequestAnalyserTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/server/ServerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/utils/PrimitiveDateBaseTest.class" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,9 +121,6 @@
     </breakpoint_any>
     <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="JavaFxApplication" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -147,9 +179,6 @@
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="client" />
-    </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="server" />
       <recent name="utils" />
@@ -165,6 +194,11 @@
       <recent name="utils" />
       <recent name="tests" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\resources" />
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\tests" />
+      <recent name="D:\Szymon\STUDIA\FastTalks\src\test" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\server\users" />
       <recent name="D:\Szymon\STUDIA\FastTalks\src\main\resources" />
@@ -175,10 +209,8 @@
       <recent name="utils" />
       <recent name="sample" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\resources" />
-      <recent name="D:\Szymon\STUDIA\FastTalks\src\main\java\tests" />
-      <recent name="D:\Szymon\STUDIA\FastTalks\src\test" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="client" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -484,16 +516,5 @@
         <breakpoint suspend="THREAD" type="java-line" />
       </breakpoints-defaults>
     </breakpoint-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/FastTalks$ClientTest_testTwoClients.ic" NAME="ClientTest.testTwoClients Coverage Results" MODIFIED="1642112739023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>tests.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/FastTalks$PrimitiveDateBaseTest_connect.ic" NAME="PrimitiveDateBaseTest.connect Coverage Results" MODIFIED="1642517678400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>utils.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/FastTalks$ClientTest_registerRequest.ic" NAME="ClientTest.registerRequest Coverage Results" MODIFIED="1642541461033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>client.*</FILTER>
-    </SUITE>
   </component>
 </project>
