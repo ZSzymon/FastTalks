@@ -10,6 +10,8 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class WeatherDownloader {
 
@@ -27,19 +29,30 @@ public class WeatherDownloader {
     }
 
     public static String getWeather() throws URISyntaxException, IOException, InterruptedException {
-        File file = getFileFromResource("api-key.private");
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String apikey = br.readLine();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://community-open-weather-map.p.rapidapi.com/weather?q=Nisko%2Cpl&lat=0&lon=0&callback=test&id=2172797&lang=en&units=metric"))
-                .header("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
-                .header("x-rapidapi-key", apikey)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body().getClass());
-        System.out.println(response.body());
-        return response.body();
+        File file;
+        try{
+            file = getFileFromResource("api-key.private");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String apikey = br.readLine();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://community-open-weather-map.p.rapidapi.com/weather?q=Nisko%2Cpl&lat=0&lon=0&callback=test&id=2172797&lang=en&units=metric"))
+                    .header("x-rapidapi-host", "community-open-weather-map.p.rapidapi.com")
+                    .header("x-rapidapi-key", apikey)
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body().getClass());
+            System.out.println(response.body());
+            return response.body();
+        }catch (IllegalArgumentException e){
+            //file do not exists.
+            //Use demofile.
+            ClassLoader classLoader = ChatterController.class.getClassLoader();
+            URL resource = classLoader.getResource("weather.json");
+            String content = Files.readString(Path.of(resource.toURI()));
+            return content;
+        }
+
 
     }
 

@@ -21,6 +21,7 @@ import utils.Request;
 import utils.Response;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -58,7 +59,7 @@ public class ChatterController extends MyController {
     @FXML
     private Label descriptionLabel;
 
-
+    private Timeline refresher;
     private synchronized static File getFileFromResource(String fileName) throws URISyntaxException {
 
         ClassLoader classLoader = ChatterController.class.getClassLoader();
@@ -118,14 +119,21 @@ public class ChatterController extends MyController {
 
     }
     void initRefresher(){
-        Timeline refresher = new Timeline(
+        refresher = new Timeline(
                 new KeyFrame(Duration.seconds(2),
                         event -> downloadMessagesForCurrentSelectedReceiver()));
         refresher.setCycleCount(Timeline.INDEFINITE);
         refresher.play();
+
     }
     @FXML
     void logOut(ActionEvent event) throws IOException{
+        Main.clientBackend.clearMessages();
+        try{
+            refresher.stop();
+        }catch (RuntimeException ignore){
+            //thats means refresher was not started. "refresher.play()"
+        }
         changeScene("loginScene.fxml", event);
     }
 
@@ -145,7 +153,7 @@ public class ChatterController extends MyController {
         boolean result = Main.clientBackend.sendChatMessage(sender, receiver, messageText);
 
         if(result){
-            Conversation conversation = Main.clientBackend.getConversation(receiver);
+            Conversation conversation = Main.clientBackend.getConversation(sender, receiver);
             messageToSend.clear();
             updateMessagesList(conversation);
         }else{
@@ -164,7 +172,7 @@ public class ChatterController extends MyController {
         if(currentSelectedReceiver == null){
             return;
         }
-        Conversation conversation = Main.clientBackend.getConversation(currentSelectedReceiver);
+        Conversation conversation = Main.clientBackend.getConversation(email, currentSelectedReceiver);
         updateMessagesList(conversation);
     }
     void updateMessagesList(Conversation conversation){

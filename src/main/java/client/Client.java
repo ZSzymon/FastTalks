@@ -17,6 +17,7 @@ public class Client {
     private final Sender sender = new Sender();
     public final Receiver receiver = new Receiver();
     private Map<String, Conversation> conversations = new HashMap<>();
+    private ReentrantLock conversationLock = new ReentrantLock();
     public boolean isListenerStarted = false;
     public Client(String host, int port) throws InterruptedException, IOException {
         this.host = host;
@@ -77,7 +78,7 @@ public class Client {
         Response response = this.receiver.waitForResponse(request.requestId);
 
         if (response.responseCode.equals(DataModel.ResponseCode.OK)){
-            addToConversationAsSender(message);
+            addToConversation(message);
         }
         return response.responseCode.equals(DataModel.ResponseCode.OK);
 
@@ -90,28 +91,52 @@ public class Client {
         Response response = this.receiver.waitForResponse(request.requestId);
         Type type = new TypeToken<HashSet<Message>>(){}.getType();
         Set<Message> messages = (Set<Message>) Message.fromJson(response.content.get("payload"), type);
-        messages.forEach(this::addToConversationAsReceiver);
+        messages.forEach(this::addToConversation);
     }
 
-    private void addToConversationAsSender(Message message) {
-        String receiver = message.receiverEmail;
-        if(conversations.get(receiver) == null){
-            conversations.put(receiver, new Conversation(message));
-        }else{
-            conversations.get(receiver).add(message);
-        }
-    }
-    private void addToConversationAsReceiver(Message message) {
-        String sender = message.senderEmail;
-        if(conversations.get(sender) == null){
-            conversations.put(sender, new Conversation(message));
-        }else{
-            conversations.get(sender).add(message);
+    public void clearMessages(){
+        conversationLock.lock();
+        try{
+            conversations.clear();
+        }finally {
+            conversationLock.unlock();
         }
     }
 
-    public Conversation getConversation(String email){
-        return conversations.get(email);
+    private String generateKey(String email1, String email2){
+        String s = email1.length() > email2.length() ? email1 + email2 : email2 + email1;
+        return s;
+    }
+    private void addToConversation(Message message){
+        String key = generateKey(message.senderEmail, message.receiverEmail);
+        if(conversations.get(key) == null){
+            conversations.put(key, new Conversation(message));
+        }else{
+            conversations.get(key).add(message);
+        }
+    }
+//    private void addToConversationAsSender(Message message) {
+//        String receiver = message.receiverEmail;
+//        if(conversations.get(receiver) == null){
+//            conversations.put(receiver, new Conversation(message));
+//        }else{
+//            conversations.get(receiver).add(message);
+//        }
+//    }
+//    private void addToConversationAsReceiver(Message message) {
+//        String sender = message.senderEmail;
+//        if(conversations.get(sender) == null){
+//            conversations.put(sender, new Conversation(message));
+//        }else{
+//            conversations.get(sender).add(message);
+//        }
+//    }
+
+    public Conversation getConversation(String firstEmail, String secondEmail){
+        //Order of emails do not matter.
+        String key = generateKey(firstEmail, secondEmail);
+        return conversations.get(key);
+
     }
 
     public void addRequest(Request request){
